@@ -15,6 +15,7 @@
     UILabel *myLabel;
     EKEventStore *store;
     UIView *zentai;
+    UIImageView *imageView; //f.
 }
 
 @end
@@ -23,15 +24,45 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
+    /* 背景画像の準備*/
+    UIImage *imageData = [UIImage imageNamed:@"back1.jpg"];
+    
+    //スクリーンサイズの取得
+    CGRect screenSize = [[UIScreen mainScreen] bounds];
+    CGFloat width = screenSize.size.width;
+    CGFloat height = screenSize.size.height;
+    CGRect rect = CGRectMake(0, 0, width, height);
+    
+    //イメージビューをつくる
+    imageView = [[UIImageView alloc]initWithFrame:rect];
+    imageView.image = imageData;
+    imageView.contentMode = UIViewContentModeScaleToFill;
+    [self.view addSubview:imageView];
+    
+    /*　天気とかの部分のバーをつくるところ */
+    //天気表示部分
+    CGRect weatherRect = CGRectMake(0, 0, height, 64);
+    UIView *weatherView = [[UIView alloc]initWithFrame:weatherRect];
+    //    weatherView.backgroundColor = [UIColor redColor]; //確認用着色
+    [self.view addSubview:weatherView];
+    
+    //ステータスバー部分
+    CGRect barRect = CGRectMake(0, 0, height, 20);
+    UIView *barView = [[UIView alloc]initWithFrame:barRect];
+    barView.backgroundColor = [UIColor whiteColor];
+    barView.alpha = 0.3;
+    [self.view addSubview:barView];
+    
+    /* ここまで */
+
+    
+    
     y = 600;
-    
-    
     zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     
     CGRect zentaiFrame = zentai.frame;
-    
     zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height - 100);
-    
     zentai.frame = zentaiFrame;
     
     [self calenderAuth];
@@ -44,8 +75,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    
     
     [self powerCheck];
     
@@ -111,7 +140,6 @@
         
         // ラベルをビューに設定する
         [zentai addSubview:myLabel];
-        
         [zentai sizeToFit];
         
         //ビューをUIviewへ設定する
@@ -280,5 +308,35 @@
         [timer invalidate];
     }
 }
+
+//回転に応じてレイアウト変更
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+                                         duration:(NSTimeInterval)duration
+{
+    //スクリーンサイズの取得
+    CGRect screenSize = [[UIScreen mainScreen] bounds];
+    CGFloat width = screenSize.size.width;
+    CGFloat height = screenSize.size.height;
+
+    if (interfaceOrientation == UIInterfaceOrientationPortrait ||
+        interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {//ふつうの向きになったとき
+        UIImage *imageData = [UIImage imageNamed:@"back1.jpg"];
+        imageView.image = imageData;
+        imageView.contentMode = UIViewContentModeScaleToFill;
+        imageView.center = CGPointMake(width/2, height/2);
+        imageView.bounds = CGRectMake(0, 0, width, height);
+    }
+    else if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+             interfaceOrientation == UIInterfaceOrientationLandscapeRight) {//よこむきに回転させたとき
+        
+        UIImage *imageData2 = [UIImage imageNamed:@"back2.jpg"];
+        imageView.image = imageData2;
+        imageView.center = CGPointMake(height/2, width/2);
+        imageView.bounds = CGRectMake(0, 0, height, width);
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+    }
+}
+
+
 
 @end
