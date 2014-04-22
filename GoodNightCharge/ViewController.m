@@ -10,7 +10,8 @@
 
 @interface ViewController ()
 {
-    int count,r,y;
+    int count,r;
+    float y;
     NSTimer* timer;
     UILabel *myLabel;
     EKEventStore *store;
@@ -23,15 +24,15 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    y = 600;
+    y = 10;
     
     
     zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     
     CGRect zentaiFrame = zentai.frame;
     
-    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height + 100);
-    
+    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height - 10);
+    NSLog(@"%f",self.view.frame.size.height -10);
     zentai.frame = zentaiFrame;
     
     [self calenderAuth];
@@ -47,8 +48,8 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     
-    [self powerCheck];
-    
+   // [self powerCheck];
+    [self mainloop];
     
     
 }
@@ -105,15 +106,15 @@
         
         
         NSAttributedString *scheduletime = [[NSAttributedString alloc]initWithString:
-                                    [NSString stringWithFormat:@"%d%2d\n",thisHour,thisMinute]
+                                    [NSString stringWithFormat:@"%d:%2d\n",thisHour,thisMinute]
                                                                   attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:13]}];
         
         NSAttributedString *scheduletitle = [[NSAttributedString alloc]initWithString:
-                                    [NSString stringWithFormat:@"%@\n",e.title]
+                                    [NSString stringWithFormat:@"　　%@\n",e.title]
                                                                   attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:21]}];
         
         NSAttributedString *schedulelocation = [[NSAttributedString alloc]initWithString:
-                                             [NSString stringWithFormat:@"%@",e.location]
+                                             [NSString stringWithFormat:@"　　%@",e.location]
                                                                            attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:15]}];
         
         NSMutableAttributedString *endSchedule = [[NSMutableAttributedString alloc] initWithAttributedString:scheduletime];
@@ -221,60 +222,60 @@
     
 }
 
-//電源状態を確認する関数です。
-- (void)powerCheck
-{
-    // デバイスのインスタンスを取得します。
-    UIDevice* device = [UIDevice currentDevice];
-    
-    // バッテリーの状態変化の検出を有効化します。
-    device.batteryMonitoringEnabled = YES;
-    
-    //UIDeviceクラスのbatteryLevelでバッテリーの残量を0～1の値で取得します。
-    NSLog(@"batteryLevel:%f",device.batteryLevel);
-    
-    
-    //UIDeviceクラスのbatteryStateでバッテリーの状態を取得します。
-    NSLog(@"batteryState:%d",device.batteryState);
-    
-    if (device.batteryState == (long)UIDeviceBatteryStateUnknown)
-    {
-        //UIDeviceBatteryStateUnknown:バッテリー状態取得不能
-        NSLog(@"バッテリー状態取得不能");
-    }
-    if (device.batteryState == (long)UIDeviceBatteryStateUnplugged)
-    {
-        //UIDeviceBatteryStateUnplugged:バッテリー使用中
-        NSLog(@"バッテリー使用中");
-    }
-    if (device.batteryState == (long)UIDeviceBatteryStateCharging)
-    {
-        //UIDeviceBatteryStateCharging:バッテリー充電中
-        NSLog(@"バッテリー充電中");
-    }
-    if (device.batteryState == (long)UIDeviceBatteryStateFull)
-    {
-        //UIDeviceBatteryStateFull:バッテリーフル充電状態
-        NSLog(@"バッテリーフル充電状態");
-    }
-    
-    
-    // バッテリー状態が変化した通知（UIDeviceBatteryStateDidChangeNotification）を受け取ったら、deviceBatteryStateDidChangeNotification関数を呼びます。
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceBatteryStateDidChangeNotification:) name:UIDeviceBatteryStateDidChangeNotification object:nil];
-    
-}
-
-
-
-// あらかじめ、バッテリー状態の変化通知が届いた時の処理を行うメソッドを準備しておきます。
-- (void)deviceBatteryStateDidChangeNotification:(NSNotification*)note
-{
-    NSLog(@"電源状態が変化しました");
-    //ここからカレンダー情報を取得して、エンドロールを流す関数を記載します。
-    
-    [self mainloop];
-    
-}
+////電源状態を確認する関数です。
+//- (void)powerCheck
+//{
+//    // デバイスのインスタンスを取得します。
+//    UIDevice* device = [UIDevice currentDevice];
+//    
+//    // バッテリーの状態変化の検出を有効化します。
+//    device.batteryMonitoringEnabled = YES;
+//    
+//    //UIDeviceクラスのbatteryLevelでバッテリーの残量を0～1の値で取得します。
+//    NSLog(@"batteryLevel:%f",device.batteryLevel);
+//    
+//    
+//    //UIDeviceクラスのbatteryStateでバッテリーの状態を取得します。
+//    NSLog(@"batteryState:%d",device.batteryState);
+//    
+//    if (device.batteryState == (long)UIDeviceBatteryStateUnknown)
+//    {
+//        //UIDeviceBatteryStateUnknown:バッテリー状態取得不能
+//        NSLog(@"バッテリー状態取得不能");
+//    }
+//    if (device.batteryState == (long)UIDeviceBatteryStateUnplugged)
+//    {
+//        //UIDeviceBatteryStateUnplugged:バッテリー使用中
+//        NSLog(@"バッテリー使用中");
+//    }
+//    if (device.batteryState == (long)UIDeviceBatteryStateCharging)
+//    {
+//        //UIDeviceBatteryStateCharging:バッテリー充電中
+//        NSLog(@"バッテリー充電中");
+//    }
+//    if (device.batteryState == (long)UIDeviceBatteryStateFull)
+//    {
+//        //UIDeviceBatteryStateFull:バッテリーフル充電状態
+//        NSLog(@"バッテリーフル充電状態");
+//    }
+//    
+//    
+//    // バッテリー状態が変化した通知（UIDeviceBatteryStateDidChangeNotification）を受け取ったら、deviceBatteryStateDidChangeNotification関数を呼びます。
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceBatteryStateDidChangeNotification:) name:UIDeviceBatteryStateDidChangeNotification object:nil];
+//    
+//}
+//
+//
+//
+//// あらかじめ、バッテリー状態の変化通知が届いた時の処理を行うメソッドを準備しておきます。
+//- (void)deviceBatteryStateDidChangeNotification:(NSNotification*)note
+//{
+//    NSLog(@"電源状態が変化しました");
+//    //ここからカレンダー情報を取得して、エンドロールを流す関数を記載します。
+//    
+//    [self mainloop];
+//    
+//}
 
 -(void)mainloop
 {
@@ -304,10 +305,14 @@
 {
     
     y -= 1;
+   // NSLog(@"!!!");
     
-    zentai.center = CGPointMake(160, y);
+    CGRect zentaiFrame = zentai.frame;
     
-    if (y < 30)
+    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height - y);
+    //NSLog(@"%f",self.view.frame.size.height -10);
+    zentai.frame = zentaiFrame;
+     if (y > -200)
     {
         [timer invalidate];
     }
