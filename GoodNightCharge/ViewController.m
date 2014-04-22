@@ -56,12 +56,12 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     
-    [self powerCheck];
+   // [self powerCheck];
     
     //電源ステータス
-    self.pawerstatus = NO;
+   // self.pawerstatus = NO;
     
-    
+    [self mainloop];
 
     
     
@@ -239,77 +239,77 @@
 }
 
 //電源状態を確認する関数です。
-- (void)powerCheck
-{
-    // デバイスのインスタンスを取得します。
-    UIDevice* device = [UIDevice currentDevice];
-    
-    // バッテリーの状態変化の検出を有効化します。
-    device.batteryMonitoringEnabled = YES;
-    
-    //UIDeviceクラスのbatteryLevelでバッテリーの残量を0～1の値で取得します。
-    NSLog(@"batteryLevel:%f",device.batteryLevel);
-    
-    
-    //UIDeviceクラスのbatteryStateでバッテリーの状態を取得します。
-    NSLog(@"batteryState:%d",device.batteryState);
-    
-    if (device.batteryState == (long)UIDeviceBatteryStateUnknown)
-    {
-        //UIDeviceBatteryStateUnknown:バッテリー状態取得不能
-        NSLog(@"バッテリー状態取得不能");
-    }
-    if (device.batteryState == (long)UIDeviceBatteryStateUnplugged)
-    {
-        //UIDeviceBatteryStateUnplugged:バッテリー使用中
-        NSLog(@"バッテリー使用中");
-        
-    }
-    if (device.batteryState == (long)UIDeviceBatteryStateCharging)
-    {
-        //UIDeviceBatteryStateCharging:バッテリー充電中
-        NSLog(@"バッテリー充電中");
-    }
-    if (device.batteryState == (long)UIDeviceBatteryStateFull)
-    {
-        //UIDeviceBatteryStateFull:バッテリーフル充電状態
-        NSLog(@"バッテリーフル充電状態");
-    }
-    
-    
-    // バッテリー状態が変化した通知（UIDeviceBatteryStateDidChangeNotification）を受け取ったら、deviceBatteryStateDidChangeNotification関数を呼びます。
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceBatteryStateDidChangeNotification:) name:UIDeviceBatteryStateDidChangeNotification object:nil];
-    
-}
-
-
-
-// あらかじめ、バッテリー状態の変化通知が届いた時の処理を行うメソッドを準備しておきます。
-- (void)deviceBatteryStateDidChangeNotification:(NSNotification*)note
-{
-    NSLog(@"電源状態が変化しました");
-    //ここからカレンダー情報を取得して、エンドロールを流す関数を記載します。
-    
-    self.pawerstatus = UIDeviceBatteryStateUnplugged;
-    
-    if (self.pawerstatus == YES) {
-         [self bgmstart];
-         [self mainloop];
-        
-        //ボタンを作成
-        [self buttonUp];
-        [self buttonDown];
-
-    }else if(self.pawerstatus == NO){
-        [self.bgm stop];
-        
-        
-        
-    }
-    
-   
-    
-}
+//- (void)powerCheck
+//{
+//    // デバイスのインスタンスを取得します。
+//    UIDevice* device = [UIDevice currentDevice];
+//    
+//    // バッテリーの状態変化の検出を有効化します。
+//    device.batteryMonitoringEnabled = YES;
+//    
+//    //UIDeviceクラスのbatteryLevelでバッテリーの残量を0～1の値で取得します。
+//    NSLog(@"batteryLevel:%f",device.batteryLevel);
+//    
+//    
+//    //UIDeviceクラスのbatteryStateでバッテリーの状態を取得します。
+//    NSLog(@"batteryState:%d",device.batteryState);
+//    
+//    if (device.batteryState == (long)UIDeviceBatteryStateUnknown)
+//    {
+//        //UIDeviceBatteryStateUnknown:バッテリー状態取得不能
+//        NSLog(@"バッテリー状態取得不能");
+//    }
+//    if (device.batteryState == (long)UIDeviceBatteryStateUnplugged)
+//    {
+//        //UIDeviceBatteryStateUnplugged:バッテリー使用中
+//        NSLog(@"バッテリー使用中");
+//        
+//    }
+//    if (device.batteryState == (long)UIDeviceBatteryStateCharging)
+//    {
+//        //UIDeviceBatteryStateCharging:バッテリー充電中
+//        NSLog(@"バッテリー充電中");
+//    }
+//    if (device.batteryState == (long)UIDeviceBatteryStateFull)
+//    {
+//        //UIDeviceBatteryStateFull:バッテリーフル充電状態
+//        NSLog(@"バッテリーフル充電状態");
+//    }
+//    
+//    
+//    // バッテリー状態が変化した通知（UIDeviceBatteryStateDidChangeNotification）を受け取ったら、deviceBatteryStateDidChangeNotification関数を呼びます。
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceBatteryStateDidChangeNotification:) name:UIDeviceBatteryStateDidChangeNotification object:nil];
+//    
+//}
+//
+//
+//
+//// あらかじめ、バッテリー状態の変化通知が届いた時の処理を行うメソッドを準備しておきます。
+//- (void)deviceBatteryStateDidChangeNotification:(NSNotification*)note
+//{
+//    NSLog(@"電源状態が変化しました");
+//    //ここからカレンダー情報を取得して、エンドロールを流す関数を記載します。
+//    
+//    self.pawerstatus = UIDeviceBatteryStateUnplugged;
+//    
+//    if (self.pawerstatus == YES) {
+//         [self bgmstart];
+//         [self mainloop];
+//        
+//        //ボタンを作成
+//        [self buttonUp];
+//        [self buttonDown];
+//
+//    }else if(self.pawerstatus == NO){
+//        [self.bgm stop];
+//        
+//        
+//        
+//    }
+//    
+//   
+//    
+//}
 
 -(void)mainloop
 {
