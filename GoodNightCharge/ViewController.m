@@ -10,8 +10,7 @@
 
 @interface ViewController ()
 {
-    int count,r;
-    float y;
+    int count,r,y;
     NSTimer* timer;
     UILabel *myLabel;
     EKEventStore *store;
@@ -24,16 +23,19 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    y = 10;
+    
+    y = 600;
     
     
-    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
+    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 1000)];
     
-    CGRect zentaiFrame = zentai.frame;
-    
-    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height - 10);
-    NSLog(@"%f",self.view.frame.size.height -10);
-    zentai.frame = zentaiFrame;
+//    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
+//    
+//    CGRect zentaiFrame = zentai.frame;
+//    
+//    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height + 100);
+//    
+//    zentai.frame = zentaiFrame;
     
     [self calenderAuth];
     
@@ -54,8 +56,14 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     
-   // [self powerCheck];
+    //[self powerCheck];
     [self mainloop];
+    //電源ステータス
+    self.pawerstatus = NO;
+    
+    
+
+    
     
     
 }
@@ -116,7 +124,7 @@
                                                                   attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:13]}];
         
         NSAttributedString *scheduletitle = [[NSAttributedString alloc]initWithString:
-                                    [NSString stringWithFormat:@"　　%@\n",e.title]
+                                    [NSString stringWithFormat:@"　%@\n",e.title]
                                                                   attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:21]}];
         
         NSAttributedString *schedulelocation = [[NSAttributedString alloc]initWithString:
@@ -254,6 +262,7 @@
 //    {
 //        //UIDeviceBatteryStateUnplugged:バッテリー使用中
 //        NSLog(@"バッテリー使用中");
+//        
 //    }
 //    if (device.batteryState == (long)UIDeviceBatteryStateCharging)
 //    {
@@ -280,7 +289,20 @@
 //    NSLog(@"電源状態が変化しました");
 //    //ここからカレンダー情報を取得して、エンドロールを流す関数を記載します。
 //    
-//    [self mainloop];
+//    self.pawerstatus = UIDeviceBatteryStateUnplugged;
+//    
+//    if (self.pawerstatus == YES) {
+//         [self bgmstart];
+//         [self mainloop];
+//
+//    }else if(self.pawerstatus == NO){
+//        [self.bgm stop];
+//        
+//        
+//        
+//    }
+//    
+//   
 //    
 //}
 
@@ -312,14 +334,10 @@
 {
     
     y -= 1;
-   // NSLog(@"!!!");
     
-    CGRect zentaiFrame = zentai.frame;
+    zentai.center = CGPointMake(160, y);
     
-    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height - y);
-    //NSLog(@"%f",self.view.frame.size.height -10);
-    zentai.frame = zentaiFrame;
-     if (y > -200)
+    if (y < 30)
     {
         [timer invalidate];
     }
