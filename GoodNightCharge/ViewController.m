@@ -137,7 +137,7 @@
 
     
         // ラベルを配置していく
-        myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 500+(i*90), 230, 80)];
+        myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 600+(i*90), 230, 80)];
         
         //ラベルの四隅を丸くする
         [[myLabel layer] setCornerRadius:3.0];
@@ -186,10 +186,6 @@
         [self.weather alertViewMethod];
         
     }
-    
-    //ボタンを作成
-    [self buttonUp];
-    [self buttonDown];
     
 }
 
@@ -299,6 +295,10 @@
     if (self.pawerstatus == YES) {
          [self bgmstart];
          [self mainloop];
+        
+        //ボタンを作成
+        [self buttonUp];
+        [self buttonDown];
 
     }else if(self.pawerstatus == NO){
         [self.bgm stop];
@@ -342,7 +342,7 @@
     
     zentai.center = CGPointMake(160, y);
     
-    if (y < 30)
+    if (y < -70)
     {
         [timer invalidate];
     }
