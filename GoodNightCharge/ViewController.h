@@ -7,7 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+#import <EventKit/EventKit.h>
 
-@interface ViewController : UIViewController
+#import "Weather.h"
+
+@interface ViewController : UIViewController <CLLocationManagerDelegate>
+{
+}
+
+@property (nonatomic, retain) CLLocationManager *locationManager;//現在地情報を格納するCLLocationManagerクラスのインスタンス}
+@property double longitude;
+@property double latitude;
+@property NSURL *url;
+
+@property Weather *weather;
+
+
 
 @end

@@ -21,6 +21,11 @@
 		F672DAC619061C0500F2CFCB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F672DAA819061C0500F2CFCB /* UIKit.framework */; };
 		F672DACE19061C0500F2CFCB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F672DACC19061C0500F2CFCB /* InfoPlist.strings */; };
 		F672DAD019061C0500F2CFCB /* GoodNightChargeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F672DACF19061C0500F2CFCB /* GoodNightChargeTests.m */; };
+		F672DADB1906234600F2CFCB /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = F672DADA1906234600F2CFCB /* Weather.m */; };
+		F672DADD190624AE00F2CFCB /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F672DADC190624AE00F2CFCB /* EventKit.framework */; };
+		F672DADF190624B800F2CFCB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F672DADE190624B800F2CFCB /* QuartzCore.framework */; };
+		F672DAE3190624E700F2CFCB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F672DAE2190624E700F2CFCB /* AVFoundation.framework */; };
+		F672DAE51906259F00F2CFCB /* yuu0032-009.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F672DAE41906259F00F2CFCB /* yuu0032-009.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +58,12 @@
 		F672DACB19061C0500F2CFCB /* GoodNightChargeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoodNightChargeTests-Info.plist"; sourceTree = "<group>"; };
 		F672DACD19061C0500F2CFCB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F672DACF19061C0500F2CFCB /* GoodNightChargeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoodNightChargeTests.m; sourceTree = "<group>"; };
+		F672DAD91906234600F2CFCB /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weather.h; sourceTree = "<group>"; };
+		F672DADA1906234600F2CFCB /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weather.m; sourceTree = "<group>"; };
+		F672DADC190624AE00F2CFCB /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		F672DADE190624B800F2CFCB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		F672DAE2190624E700F2CFCB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		F672DAE41906259F00F2CFCB /* yuu0032-009.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "yuu0032-009.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +71,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F672DAE3190624E700F2CFCB /* AVFoundation.framework in Frameworks */,
+				F672DADF190624B800F2CFCB /* QuartzCore.framework in Frameworks */,
+				F672DADD190624AE00F2CFCB /* EventKit.framework in Frameworks */,
 				F672DAA719061C0500F2CFCB /* CoreGraphics.framework in Frameworks */,
 				F672DAA919061C0500F2CFCB /* UIKit.framework in Frameworks */,
 				F672DAA519061C0500F2CFCB /* Foundation.framework in Frameworks */,
@@ -101,6 +115,9 @@
 		F672DAA319061C0500F2CFCB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F672DAE2190624E700F2CFCB /* AVFoundation.framework */,
+				F672DADE190624B800F2CFCB /* QuartzCore.framework */,
+				F672DADC190624AE00F2CFCB /* EventKit.framework */,
 				F672DAA419061C0500F2CFCB /* Foundation.framework */,
 				F672DAA619061C0500F2CFCB /* CoreGraphics.framework */,
 				F672DAA819061C0500F2CFCB /* UIKit.framework */,
@@ -112,6 +129,8 @@
 		F672DAAA19061C0500F2CFCB /* GoodNightCharge */ = {
 			isa = PBXGroup;
 			children = (
+				F672DAD91906234600F2CFCB /* Weather.h */,
+				F672DADA1906234600F2CFCB /* Weather.m */,
 				F672DAB319061C0500F2CFCB /* AppDelegate.h */,
 				F672DAB419061C0500F2CFCB /* AppDelegate.m */,
 				F672DAB619061C0500F2CFCB /* Main.storyboard */,
@@ -126,6 +145,7 @@
 		F672DAAB19061C0500F2CFCB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F672DAE41906259F00F2CFCB /* yuu0032-009.jpg */,
 				F672DAAC19061C0500F2CFCB /* GoodNightCharge-Info.plist */,
 				F672DAAD19061C0500F2CFCB /* InfoPlist.strings */,
 				F672DAB019061C0500F2CFCB /* main.m */,
@@ -228,6 +248,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F672DAE51906259F00F2CFCB /* yuu0032-009.jpg in Resources */,
 				F672DABD19061C0500F2CFCB /* Images.xcassets in Resources */,
 				F672DAAF19061C0500F2CFCB /* InfoPlist.strings in Resources */,
 				F672DAB819061C0500F2CFCB /* Main.storyboard in Resources */,
@@ -249,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F672DADB1906234600F2CFCB /* Weather.m in Sources */,
 				F672DABB19061C0500F2CFCB /* ViewController.m in Sources */,
 				F672DAB519061C0500F2CFCB /* AppDelegate.m in Sources */,
 				F672DAB119061C0500F2CFCB /* main.m in Sources */,
