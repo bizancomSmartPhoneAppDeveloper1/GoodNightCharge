@@ -137,7 +137,7 @@
 
     
         // ラベルを配置していく
-        myLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 500+(i*90), 280, 80)];
+        myLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 500+(i*90), 230, 80)];
         
         //ラベルの四隅を丸くする
         [[myLabel layer] setCornerRadius:3.0];
