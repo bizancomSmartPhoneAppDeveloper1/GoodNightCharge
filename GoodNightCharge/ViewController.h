@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import <EventKit/EventKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 #import "Weather.h"
 
@@ -22,6 +23,8 @@
 @property NSURL *url;
 
 @property Weather *weather;
+@property AVAudioPlayer *bgm;
+@property BOOL pawerstatus;
 
 
 

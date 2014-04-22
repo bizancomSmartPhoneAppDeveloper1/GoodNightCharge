@@ -40,6 +40,12 @@
     self.weather = [[Weather alloc]init];
     [self firstLoadMethod];
     
+    //音源設定
+    NSString *bgmPath = [[NSBundle mainBundle]pathForResource:@"tw059" ofType:@"mp3"];  //ファイル名と拡張子が引数になる
+    NSURL *bgmUrl = [NSURL fileURLWithPath:bgmPath];  //音声ファイルの場所をurl変数に置き換える
+    
+    NSError *error;
+    self.bgm = [[AVAudioPlayer alloc]initWithContentsOfURL:bgmUrl error:&error];
 }
 
 - (void)viewDidLoad
@@ -220,6 +226,7 @@
     self.weather.jsonObject = [self.weather webAPIMethod:urlApi];
     [self.weather takeInfo];
     
+    
 }
 
 ////電源状態を確認する関数です。
@@ -317,5 +324,17 @@
         [timer invalidate];
     }
 }
+
+
+-(void)bgmstart{
+    [self.bgm stop];
+    
+    [self.bgm setNumberOfLoops:-1];  //繰り返し設定 0が１回、-1がエンドレス
+    [self.bgm prepareToPlay];
+    [self.bgm play];
+    
+    
+}
+
 
 @end
