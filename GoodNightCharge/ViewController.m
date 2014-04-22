@@ -23,16 +23,19 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
     y = 600;
     
     
-    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
+    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 1000)];
     
-    CGRect zentaiFrame = zentai.frame;
-    
-    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height + 100);
-    
-    zentai.frame = zentaiFrame;
+//    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
+//    
+//    CGRect zentaiFrame = zentai.frame;
+//    
+//    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height + 100);
+//    
+//    zentai.frame = zentaiFrame;
     
     [self calenderAuth];
     
@@ -117,15 +120,15 @@
         
         
         NSAttributedString *scheduletime = [[NSAttributedString alloc]initWithString:
-                                    [NSString stringWithFormat:@"%d%2d\n",thisHour,thisMinute]
+                                    [NSString stringWithFormat:@"%d:%2d\n",thisHour,thisMinute]
                                                                   attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:13]}];
         
         NSAttributedString *scheduletitle = [[NSAttributedString alloc]initWithString:
-                                    [NSString stringWithFormat:@"%@\n",e.title]
+                                    [NSString stringWithFormat:@"　%@\n",e.title]
                                                                   attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:21]}];
         
         NSAttributedString *schedulelocation = [[NSAttributedString alloc]initWithString:
-                                             [NSString stringWithFormat:@"%@",e.location]
+                                             [NSString stringWithFormat:@"　　%@",e.location]
                                                                            attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:15]}];
         
         NSMutableAttributedString *endSchedule = [[NSMutableAttributedString alloc] initWithAttributedString:scheduletime];
