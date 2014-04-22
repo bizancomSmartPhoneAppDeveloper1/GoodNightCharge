@@ -40,12 +40,22 @@
     imageView.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageView];
     
+    
     /*　天気とかの部分のバーをつくるところ */
     //天気表示部分
     CGRect weatherRect = CGRectMake(0, 0, height, 64);
     UIView *weatherView = [[UIView alloc]initWithFrame:weatherRect];
     //    weatherView.backgroundColor = [UIColor redColor]; //確認用着色
     [self.view addSubview:weatherView];
+    
+    //天気の表示場所 imageViewつくる
+    CGRect weatherIcon = CGRectMake(screenSize.size.width-65, 22, 60, 60);
+    UIImageView *weatherIconView = [[UIImageView alloc]initWithFrame:weatherIcon];
+//    weatherIconView.backgroundColor = [UIColor blueColor];//確認用着色
+    UIImage *imagetest = [UIImage imageNamed:@"weatherumbrella.png"];
+    weatherIconView.image = imagetest;
+    [self.view addSubview:weatherIconView];
+    
     
     //ステータスバー部分
     CGRect barRect = CGRectMake(0, 0, height, 20);
@@ -59,12 +69,12 @@
     
     
     y = 600;
-//    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];    
-//    CGRect zentaiFrame = zentai.frame;
-//    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height+65);
+    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
+    CGRect zentaiFrame = zentai.frame;
+    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height + 100);
     
-    CGRect zentaiRect = CGRectMake(0,65,height,height);
-    zentai = [[UIView alloc]initWithFrame:zentaiRect];
+//    CGRect zentaiRect = CGRectMake(0,65,height,height);
+//    zentai = [[UIView alloc]initWithFrame:zentaiRect];
     
     [self calenderAuth];
     
