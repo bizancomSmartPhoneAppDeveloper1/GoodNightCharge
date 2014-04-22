@@ -30,7 +30,7 @@
     
     CGRect zentaiFrame = zentai.frame;
     
-    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height - 100);
+    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height + 100);
     
     zentai.frame = zentaiFrame;
     
@@ -88,9 +88,41 @@
     {
         NSLog(@"title=%@", e.title);
         NSLog(@"%@",e.startDate);
+        NSLog(@"%@",e.location);
         
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *dateComps = [calendar components:NSYearCalendarUnit |
+                                       NSMonthCalendarUnit  |
+                                       NSDayCalendarUnit    |
+                                       NSHourCalendarUnit   |
+                                       NSMinuteCalendarUnit |
+                                       NSSecondCalendarUnit
+                                                  fromDate:e.startDate];
+        NSInteger thisHour = (int)dateComps.hour;
+        NSLog(@"時間＝%d",thisHour);
+        NSInteger thisMinute = (int)dateComps.minute;
+        NSLog(@"分＝%2d",thisMinute);
+        
+        
+        NSAttributedString *scheduletime = [[NSAttributedString alloc]initWithString:
+                                    [NSString stringWithFormat:@"%d%2d\n",thisHour,thisMinute]
+                                                                  attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:13]}];
+        
+        NSAttributedString *scheduletitle = [[NSAttributedString alloc]initWithString:
+                                    [NSString stringWithFormat:@"%@\n",e.title]
+                                                                  attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:21]}];
+        
+        NSAttributedString *schedulelocation = [[NSAttributedString alloc]initWithString:
+                                             [NSString stringWithFormat:@"%@",e.location]
+                                                                           attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:15]}];
+        
+        NSMutableAttributedString *endSchedule = [[NSMutableAttributedString alloc] initWithAttributedString:scheduletime];
+        [endSchedule appendAttributedString:scheduletitle];
+        [endSchedule appendAttributedString:schedulelocation];
+
+    
         // ラベルを配置していく
-        myLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 500+(i*90), 280, 75)];
+        myLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 500+(i*90), 280, 80)];
         
         //ラベルの四隅を丸くする
         [[myLabel layer] setCornerRadius:3.0];
@@ -103,7 +135,7 @@
         myLabel.backgroundColor = [UIColor colorWithRed:0.961 green:0.961 blue:0.961 alpha:0.3];
         
         // ラベルに配列の要素を代入
-        myLabel.text = [NSString stringWithFormat:@"%@\n %@",e.title,e.startDate];
+        myLabel.attributedText = endSchedule;
         
         
         myLabel.numberOfLines = 3;
