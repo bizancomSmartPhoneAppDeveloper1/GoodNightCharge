@@ -99,6 +99,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		879D4C6E1906979100F3A866 /* pics */ = {
+			isa = PBXGroup;
+			children = (
+				879D4C6F190697A700F3A866 /* arrow 15.png */,
+				879D4C70190697A700F3A866 /* arrow 16.png */,
+			);
+			name = pics;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		F672DA9819061C0500F2CFCB = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +145,7 @@
 		F672DAAA19061C0500F2CFCB /* GoodNightCharge */ = {
 			isa = PBXGroup;
 			children = (
+				879D4C6E1906979100F3A866 /* pics */,
 				F672DAD91906234600F2CFCB /* Weather.h */,
 				F672DADA1906234600F2CFCB /* Weather.m */,
 				F672DAB319061C0500F2CFCB /* AppDelegate.h */,
@@ -154,6 +165,7 @@
 		F672DAAB19061C0500F2CFCB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				182F059D190649C4002F5FC1 /* tw059.mp3 */,
 				F672DAE41906259F00F2CFCB /* yuu0032-009.jpg */,
 				F672DAAC19061C0500F2CFCB /* GoodNightCharge-Info.plist */,
 				F672DAAD19061C0500F2CFCB /* InfoPlist.strings */,

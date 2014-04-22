@@ -81,6 +81,12 @@
     self.weather = [[Weather alloc]init];
     [self firstLoadMethod];
     
+    //音源設定
+    NSString *bgmPath = [[NSBundle mainBundle]pathForResource:@"tw059" ofType:@"mp3"];  //ファイル名と拡張子が引数になる
+    NSURL *bgmUrl = [NSURL fileURLWithPath:bgmPath];  //音声ファイルの場所をurl変数に置き換える
+    
+    NSError *error;
+    self.bgm = [[AVAudioPlayer alloc]initWithContentsOfURL:bgmUrl error:&error];
 }
 
 - (void)viewDidLoad
@@ -88,6 +94,12 @@
     [super viewDidLoad];
     
     [self powerCheck];
+    
+    //電源ステータス
+    self.pawerstatus = NO;
+    
+    
+
     
     
     
@@ -145,15 +157,15 @@
         
         
         NSAttributedString *scheduletime = [[NSAttributedString alloc]initWithString:
-                                    [NSString stringWithFormat:@"%d%2d\n",thisHour,thisMinute]
+                                    [NSString stringWithFormat:@"%d:%2d\n",thisHour,thisMinute]
                                                                   attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:13]}];
         
         NSAttributedString *scheduletitle = [[NSAttributedString alloc]initWithString:
-                                    [NSString stringWithFormat:@"%@\n",e.title]
+                                    [NSString stringWithFormat:@"　%@\n",e.title]
                                                                   attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:21]}];
         
         NSAttributedString *schedulelocation = [[NSAttributedString alloc]initWithString:
-                                             [NSString stringWithFormat:@"%@",e.location]
+                                             [NSString stringWithFormat:@"　　%@",e.location]
                                                                            attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:15]}];
         
         NSMutableAttributedString *endSchedule = [[NSMutableAttributedString alloc] initWithAttributedString:scheduletime];
@@ -162,7 +174,7 @@
 
     
         // ラベルを配置していく
-        myLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 500+(i*90), 280, 80)];
+        myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 600+(i*90), 230, 80)];
         
         //ラベルの四隅を丸くする
         [[myLabel layer] setCornerRadius:3.0];
@@ -208,6 +220,7 @@
     } else {
         NSLog(@"Location services not available.");
         [self.weather alertViewMethod];
+        
     }
     
 }
@@ -258,6 +271,7 @@
     self.weather.jsonObject = [self.weather webAPIMethod:urlApi];
     [self.weather takeInfo];
     
+    
 }
 
 //電源状態を確認する関数です。
@@ -285,6 +299,7 @@
     {
         //UIDeviceBatteryStateUnplugged:バッテリー使用中
         NSLog(@"バッテリー使用中");
+        
     }
     if (device.batteryState == (long)UIDeviceBatteryStateCharging)
     {
@@ -311,7 +326,24 @@
     NSLog(@"電源状態が変化しました");
     //ここからカレンダー情報を取得して、エンドロールを流す関数を記載します。
     
-    [self mainloop];
+    self.pawerstatus = UIDeviceBatteryStateUnplugged;
+    
+    if (self.pawerstatus == YES) {
+         [self bgmstart];
+         [self mainloop];
+        
+        //ボタンを作成
+        [self buttonUp];
+        [self buttonDown];
+
+    }else if(self.pawerstatus == NO){
+        [self.bgm stop];
+        
+        
+        
+    }
+    
+   
     
 }
 
@@ -346,7 +378,7 @@
     
     zentai.center = CGPointMake(160, y);
     
-    if (y < 30)
+    if (y < -70)
     {
         [timer invalidate];
     }
