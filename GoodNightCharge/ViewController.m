@@ -116,25 +116,39 @@
         NSInteger thisHour = (int)dateComps.hour;
         NSLog(@"時間＝%d",thisHour);
         NSInteger thisMinute = (int)dateComps.minute;
-        NSLog(@"分＝%2d",thisMinute);
+        NSLog(@"分＝%d",thisMinute);
+        
+        NSString *thisMinuteString;
+        if (thisMinute<10) {
+            thisMinuteString = [NSString stringWithFormat:@"0%d",thisMinute];
+        }else{
+            thisMinuteString = [NSString stringWithFormat:@"%d",thisMinute];
+        }
         
         
         NSAttributedString *scheduletime = [[NSAttributedString alloc]initWithString:
-                                    [NSString stringWithFormat:@"%d:%2d\n",thisHour,thisMinute]
+                                    [NSString stringWithFormat:@"%d:%@\n",thisHour,thisMinuteString]
                                                                   attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:13]}];
         
         NSAttributedString *scheduletitle = [[NSAttributedString alloc]initWithString:
                                     [NSString stringWithFormat:@"　%@\n",e.title]
                                                                   attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:21]}];
         
-        NSAttributedString *schedulelocation = [[NSAttributedString alloc]initWithString:
+        NSAttributedString *schedulelocation;
+        if (!(e.location == NULL)) {
+        schedulelocation = [[NSAttributedString alloc]initWithString:
                                              [NSString stringWithFormat:@"　　%@",e.location]
                                                                            attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:15]}];
+        }else{
+            schedulelocation = [[NSAttributedString alloc]initWithString:
+                                [NSString stringWithFormat:@"　　"]
+                                                              attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:15]}];
+        }
         
         NSMutableAttributedString *endSchedule = [[NSMutableAttributedString alloc] initWithAttributedString:scheduletime];
         [endSchedule appendAttributedString:scheduletitle];
         [endSchedule appendAttributedString:schedulelocation];
-
+        
     
         // ラベルを配置していく
         myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 600+(i*90), 230, 80)];
