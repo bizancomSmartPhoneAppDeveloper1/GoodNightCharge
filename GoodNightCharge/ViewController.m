@@ -39,6 +39,12 @@
     self.weather = [[Weather alloc]init];
     [self firstLoadMethod];
     
+    //音源設定
+    NSString *bgmPath = [[NSBundle mainBundle]pathForResource:@"tw059" ofType:@"mp3"];  //ファイル名と拡張子が引数になる
+    NSURL *bgmUrl = [NSURL fileURLWithPath:bgmPath];  //音声ファイルの場所をurl変数に置き換える
+    
+    NSError *error;
+    self.bgm = [[AVAudioPlayer alloc]initWithContentsOfURL:bgmUrl error:&error];
 }
 
 - (void)viewDidLoad
@@ -48,6 +54,12 @@
     
     
     [self powerCheck];
+    
+    //電源ステータス
+    self.pawerstatus = NO;
+    
+    
+
     
     
     
@@ -187,6 +199,7 @@
     self.weather.jsonObject = [self.weather webAPIMethod:urlApi];
     [self.weather takeInfo];
     
+    
 }
 
 //電源状態を確認する関数です。
@@ -203,7 +216,7 @@
     
     
     //UIDeviceクラスのbatteryStateでバッテリーの状態を取得します。
-    NSLog(@"batteryState:%d",device.batteryState);
+    NSLog(@"batteryState:%ld",device.batteryState);
     
     if (device.batteryState == (long)UIDeviceBatteryStateUnknown)
     {
@@ -214,6 +227,7 @@
     {
         //UIDeviceBatteryStateUnplugged:バッテリー使用中
         NSLog(@"バッテリー使用中");
+        
     }
     if (device.batteryState == (long)UIDeviceBatteryStateCharging)
     {
@@ -240,7 +254,20 @@
     NSLog(@"電源状態が変化しました");
     //ここからカレンダー情報を取得して、エンドロールを流す関数を記載します。
     
-    [self mainloop];
+    self.pawerstatus = UIDeviceBatteryStateUnplugged;
+    
+    if (self.pawerstatus == YES) {
+         [self bgmstart];
+         [self mainloop];
+
+    }else if(self.pawerstatus == NO){
+        [self.bgm stop];
+        
+        
+        
+    }
+    
+   
     
 }
 
@@ -280,5 +307,17 @@
         [timer invalidate];
     }
 }
+
+
+-(void)bgmstart{
+    [self.bgm stop];
+    
+    [self.bgm setNumberOfLoops:-1];  //繰り返し設定 0が１回、-1がエンドレス
+    [self.bgm prepareToPlay];
+    [self.bgm play];
+    
+    
+}
+
 
 @end
