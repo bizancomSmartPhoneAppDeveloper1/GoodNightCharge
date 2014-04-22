@@ -46,7 +46,7 @@
     [self.view addSubview:imageView];
     
     //背景トーンを落とすためのレイヤーを重ねる
-    UIView *rayer = [[UIView alloc]initWithFrame:rect];
+    UIView *rayer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, height, height)];
     rayer.alpha = 0.2;
     rayer.backgroundColor = [UIColor blackColor];
     [self.view addSubview:rayer];
@@ -61,21 +61,38 @@
 //    zentai.frame = zentaiFrame;
     
     
-    /*　天気とかの部分のバーをつくるところ */
+    /*　天気、tomorrow、文字列表示部分の生成 */
     
-    //天気、tomorrow、文字列表示部分のビュー生成
-    //取得した天気、気温はこのビューに表示する
-    
-    CGRect weatherRect = CGRectMake(0, 0, height, 80);
+    //取得した天気、気温を表示するビュー
+    CGRect weatherRect = CGRectMake(0, 0, height, 64);
     UIView *weatherView = [[UIView alloc]initWithFrame:weatherRect];
 //    weatherView.backgroundColor = [UIColor redColor]; //範囲確認用着色
     [self.view addSubview:weatherView];
     
+    //文字ラベル生成
+    UILabel *tomorrow = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, 78, 20)];
+    tomorrow.text = @"tomorrow";
+    tomorrow.font = [UIFont fontWithName:@"AppleGothic" size:15];
+    tomorrow.textColor = [UIColor whiteColor];
+//    tomorrow.backgroundColor = [UIColor blackColor];//範囲確認用着色
+    [weatherView addSubview:tomorrow];
+    
+    
+    //気温ラベル生成
+    UILabel *degree = [[UILabel alloc]initWithFrame:CGRectMake(10, 43, 70, 20)];
+    degree.text = @"13";
+    degree.font = [UIFont fontWithName:@"AppleGothic" size:18];
+    degree.textColor = [UIColor whiteColor];
+    degree.textAlignment = NSTextAlignmentRight;
+//    degree.backgroundColor = [UIColor blackColor];//範囲確認用着色
+    [weatherView addSubview:degree];
+
+    
     //天気アイコン表示箇所指定
-    CGRect weatherIcon = CGRectMake(screenSize.size.width-65, 22, 60, 60);
+    CGRect weatherIcon = CGRectMake(84, 22, 40 , 40);
     UIImageView *weatherIconView = [[UIImageView alloc]initWithFrame:weatherIcon];
 //    weatherIconView.backgroundColor = [UIColor blueColor];//範囲確認用着色
-    UIImage *weatherIconImage = [UIImage imageNamed:@"01d.png"];//確認用
+    UIImage *weatherIconImage = [UIImage imageNamed:@"01d.png"];//表示確認用
     weatherIconView.image = weatherIconImage;
     [self.view addSubview:weatherIconView];
     
@@ -448,7 +465,7 @@
     UIButton *button =[UIButton buttonWithType:UIButtonTypeCustom];
     
     // ボタンの位置を設定
-    button.frame = CGRectMake(270, 90, 44, 44); //f.位置変更
+    button.frame = CGRectMake(270, 64, 44, 44); //f.pointyの位置変更
     
     // キャプションを設定
     [button setBackgroundImage:[UIImage imageNamed:@"arrow 16.png"] forState:UIControlStateNormal];
