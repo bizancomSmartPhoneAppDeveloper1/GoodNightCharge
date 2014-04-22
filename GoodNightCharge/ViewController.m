@@ -248,7 +248,7 @@
     
     
     //UIDeviceクラスのbatteryStateでバッテリーの状態を取得します。
-    NSLog(@"batteryState:%ld",device.batteryState);
+    NSLog(@"batteryState:%d",device.batteryState);
     
     if (device.batteryState == (long)UIDeviceBatteryStateUnknown)
     {
