@@ -27,7 +27,7 @@
     y = 600;
     
     
-    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 1000)];
+    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 269, 1000)];
     
 //    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
 //    
@@ -137,7 +137,7 @@
 
     
         // ラベルを配置していく
-        myLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 500+(i*90), 230, 80)];
+        myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 500+(i*90), 230, 80)];
         
         //ラベルの四隅を丸くする
         [[myLabel layer] setCornerRadius:3.0];
@@ -184,7 +184,12 @@
     } else {
         NSLog(@"Location services not available.");
         [self.weather alertViewMethod];
+        
     }
+    
+    //ボタンを作成
+    [self buttonUp];
+    [self buttonDown];
     
 }
 
@@ -351,6 +356,86 @@
     [self.bgm prepareToPlay];
     [self.bgm play];
     
+    
+}
+
+//上に動かす
+- (void)moveUp{
+    [timer invalidate];
+    y -= 150;
+    
+    zentai.center = CGPointMake(160, y);
+    
+}
+
+//上に動かすボタン
+- (void)buttonUp{
+    UIButton *button =[UIButton buttonWithType:UIButtonTypeCustom];
+    
+    // ボタンの位置を設定
+    button.frame = CGRectMake(270, 30, 44, 44);
+    
+    // キャプションを設定
+    [button setBackgroundImage:[UIImage imageNamed:@"arrow 16.png"] forState:UIControlStateNormal];
+    
+    //ボタンの背景色を入れて角を丸くする
+    [button setBackgroundColor:[UIColor whiteColor]];
+    [button setAlpha:0.2];
+    [[button layer] setCornerRadius:3.0];
+    [button setClipsToBounds:YES];
+
+    // キャプションに合わせてサイズを設定
+    [button sizeToFit];
+    
+    
+    
+    // ボタンがタップされたときに呼ばれるメソッドを設定
+    [button addTarget:self
+                action:@selector(moveUp)
+                forControlEvents:UIControlEventTouchUpInside];
+    
+    // ボタンをビューに追加
+    [self.view addSubview:button];
+
+}
+
+//下に動かす
+- (void)moveDown{
+    [timer invalidate];
+    y += 150;
+    
+    zentai.center = CGPointMake(160, y);
+    
+}
+
+//下に動かすボタン
+- (void)buttonDown{
+    UIButton *button =[UIButton buttonWithType:UIButtonTypeCustom];
+    
+    // ボタンの位置を設定
+    button.frame = CGRectMake(270, 425, 44, 44);
+    
+    
+    // キャプションを設定
+    [button setBackgroundImage:[UIImage imageNamed:@"arrow 15.png"]  forState:UIControlStateNormal];
+    
+    // キャプションに合わせてサイズを設定
+    [button sizeToFit];
+    
+    //ボタンの背景色を入れて角を丸くする
+    [button setBackgroundColor:[UIColor whiteColor]];
+    [button setAlpha:0.2];
+    [[button layer] setCornerRadius:3.0];
+    [button setClipsToBounds:YES];
+    
+    
+    // ボタンがタップされたときに呼ばれるメソッドを設定
+    [button addTarget:self
+               action:@selector(moveDown)
+     forControlEvents:UIControlEventTouchUpInside];
+    
+    // ボタンをビューに追加
+    [self.view addSubview:button];
     
 }
 

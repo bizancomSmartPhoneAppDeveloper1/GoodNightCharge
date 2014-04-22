@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		182F059E190649C4002F5FC1 /* tw059.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 182F059D190649C4002F5FC1 /* tw059.mp3 */; };
+		879D4C71190697A700F3A866 /* arrow 15.png in Resources */ = {isa = PBXBuildFile; fileRef = 879D4C6F190697A700F3A866 /* arrow 15.png */; };
+		879D4C72190697A700F3A866 /* arrow 16.png in Resources */ = {isa = PBXBuildFile; fileRef = 879D4C70190697A700F3A866 /* arrow 16.png */; };
 		F672DAA519061C0500F2CFCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F672DAA419061C0500F2CFCB /* Foundation.framework */; };
 		F672DAA719061C0500F2CFCB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F672DAA619061C0500F2CFCB /* CoreGraphics.framework */; };
 		F672DAA919061C0500F2CFCB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F672DAA819061C0500F2CFCB /* UIKit.framework */; };
@@ -41,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		182F059D190649C4002F5FC1 /* tw059.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tw059.mp3; sourceTree = SOURCE_ROOT; };
+		879D4C6F190697A700F3A866 /* arrow 15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow 15.png"; path = "pics/arrow 15.png"; sourceTree = "<group>"; };
+		879D4C70190697A700F3A866 /* arrow 16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow 16.png"; path = "pics/arrow 16.png"; sourceTree = "<group>"; };
 		F672DAA119061C0500F2CFCB /* GoodNightCharge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoodNightCharge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F672DAA419061C0500F2CFCB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F672DAA619061C0500F2CFCB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -95,6 +99,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		879D4C6E1906979100F3A866 /* pics */ = {
+			isa = PBXGroup;
+			children = (
+				879D4C6F190697A700F3A866 /* arrow 15.png */,
+				879D4C70190697A700F3A866 /* arrow 16.png */,
+			);
+			name = pics;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		F672DA9819061C0500F2CFCB = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +145,7 @@
 		F672DAAA19061C0500F2CFCB /* GoodNightCharge */ = {
 			isa = PBXGroup;
 			children = (
+				879D4C6E1906979100F3A866 /* pics */,
 				F672DAD91906234600F2CFCB /* Weather.h */,
 				F672DADA1906234600F2CFCB /* Weather.m */,
 				F672DAB319061C0500F2CFCB /* AppDelegate.h */,
@@ -252,7 +267,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F672DAE51906259F00F2CFCB /* yuu0032-009.jpg in Resources */,
+				879D4C72190697A700F3A866 /* arrow 16.png in Resources */,
 				F672DABD19061C0500F2CFCB /* Images.xcassets in Resources */,
+				879D4C71190697A700F3A866 /* arrow 15.png in Resources */,
 				182F059E190649C4002F5FC1 /* tw059.mp3 in Resources */,
 				F672DAAF19061C0500F2CFCB /* InfoPlist.strings in Resources */,
 				F672DAB819061C0500F2CFCB /* Main.storyboard in Resources */,
