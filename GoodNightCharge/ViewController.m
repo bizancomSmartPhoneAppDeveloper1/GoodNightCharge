@@ -27,10 +27,12 @@
     
     y = 600;
     
+    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 269, 1000)];
+    
+    
     /* 背景画像の準備*/
     UIImage *imageData = [UIImage imageNamed:@"back1.jpg"];
     
-    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 269, 1000)];
     //スクリーンサイズの取得
     CGRect screenSize = [[UIScreen mainScreen] bounds];
     CGFloat width = screenSize.size.width;
@@ -42,6 +44,14 @@
     imageView.image = imageData;
     imageView.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageView];
+    
+    //背景トーンを落とすためのレイヤーを重ねる
+    UIView *rayer = [[UIView alloc]initWithFrame:rect];
+    rayer.alpha = 0.2;
+    rayer.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:rayer];
+
+    
 //    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
 //    
 //    CGRect zentaiFrame = zentai.frame;
@@ -52,18 +62,21 @@
     
     
     /*　天気とかの部分のバーをつくるところ */
-    //天気表示部分
-    CGRect weatherRect = CGRectMake(0, 0, height, 64);
+    
+    //天気、tomorrow、文字列表示部分のビュー生成
+    //取得した天気、気温はこのビューに表示する
+    
+    CGRect weatherRect = CGRectMake(0, 0, height, 80);
     UIView *weatherView = [[UIView alloc]initWithFrame:weatherRect];
-    //    weatherView.backgroundColor = [UIColor redColor]; //確認用着色
+//    weatherView.backgroundColor = [UIColor redColor]; //範囲確認用着色
     [self.view addSubview:weatherView];
     
-    //天気の表示場所 imageViewつくる
+    //天気アイコン表示箇所指定
     CGRect weatherIcon = CGRectMake(screenSize.size.width-65, 22, 60, 60);
     UIImageView *weatherIconView = [[UIImageView alloc]initWithFrame:weatherIcon];
-//    weatherIconView.backgroundColor = [UIColor blueColor];//確認用着色
-    UIImage *imagetest = [UIImage imageNamed:@"weatherumbrella.png"];
-    weatherIconView.image = imagetest;
+//    weatherIconView.backgroundColor = [UIColor blueColor];//範囲確認用着色
+    UIImage *weatherIconImage = [UIImage imageNamed:@"01d.png"];//確認用
+    weatherIconView.image = weatherIconImage;
     [self.view addSubview:weatherIconView];
     
     
@@ -435,7 +448,7 @@
     UIButton *button =[UIButton buttonWithType:UIButtonTypeCustom];
     
     // ボタンの位置を設定
-    button.frame = CGRectMake(270, 30, 44, 44);
+    button.frame = CGRectMake(270, 90, 44, 44); //f.位置変更
     
     // キャプションを設定
     [button setBackgroundImage:[UIImage imageNamed:@"arrow 16.png"] forState:UIControlStateNormal];
