@@ -128,11 +128,6 @@
     //電源ステータス
     self.pawerstatus = NO;
     
-    
-
-    
-    
-    
 }
 
 - (void)calenderAuth
@@ -424,7 +419,7 @@
     CGFloat height = screenSize.size.height;
 
     if (interfaceOrientation == UIInterfaceOrientationPortrait ||
-        interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {//ふつうの向きになったとき
+        interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {//縦向きになったとき
         UIImage *imageData = [UIImage imageNamed:@"back1.jpg"];
         imageView.image = imageData;
         imageView.contentMode = UIViewContentModeScaleToFill;
@@ -432,7 +427,7 @@
         imageView.bounds = CGRectMake(0, 0, width, height);
     }
     else if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-             interfaceOrientation == UIInterfaceOrientationLandscapeRight) {//よこむきに回転させたとき
+             interfaceOrientation == UIInterfaceOrientationLandscapeRight) {//横向きになったとき
         
         UIImage *imageData2 = [UIImage imageNamed:@"back2.jpg"];
         imageView.image = imageData2;
@@ -463,10 +458,9 @@
 //上に動かすボタン
 - (void)buttonUp{
     UIButton *button =[UIButton buttonWithType:UIButtonTypeCustom];
-    
+
     // ボタンの位置を設定
-    button.frame = CGRectMake(270, 64, 44, 44); //f.pointyの位置変更
-    
+        button.frame = CGRectMake(270, 64, 44, 44); //f.pointyの位置変更
     // キャプションを設定
     [button setBackgroundImage:[UIImage imageNamed:@"arrow 16.png"] forState:UIControlStateNormal];
     
@@ -503,10 +497,9 @@
 //下に動かすボタン
 - (void)buttonDown{
     UIButton *button =[UIButton buttonWithType:UIButtonTypeCustom];
-    
+
     // ボタンの位置を設定
-    button.frame = CGRectMake(270, 425, 44, 44);
-    
+        button.frame = CGRectMake(270, 425, 44, 44);
     
     // キャプションを設定
     [button setBackgroundImage:[UIImage imageNamed:@"arrow 15.png"]  forState:UIControlStateNormal];
