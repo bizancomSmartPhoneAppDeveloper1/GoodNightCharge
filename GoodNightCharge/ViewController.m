@@ -59,11 +59,12 @@
     
     
     y = 600;
-    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
+//    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];    
+//    CGRect zentaiFrame = zentai.frame;
+//    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height+65);
     
-    CGRect zentaiFrame = zentai.frame;
-    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height - 100);
-    zentai.frame = zentaiFrame;
+    CGRect zentaiRect = CGRectMake(0,65,height,height);
+    zentai = [[UIView alloc]initWithFrame:zentaiRect];
     
     [self calenderAuth];
     
