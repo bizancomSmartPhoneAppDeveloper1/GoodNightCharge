@@ -25,9 +25,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     
+    y = 600;
+    
     /* 背景画像の準備*/
     UIImage *imageData = [UIImage imageNamed:@"back1.jpg"];
     
+    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 269, 1000)];
     //スクリーンサイズの取得
     CGRect screenSize = [[UIScreen mainScreen] bounds];
     CGFloat width = screenSize.size.width;
@@ -39,6 +42,13 @@
     imageView.image = imageData;
     imageView.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageView];
+//    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
+//    
+//    CGRect zentaiFrame = zentai.frame;
+//    
+//    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height + 100);
+//    
+//    zentai.frame = zentaiFrame;
     
     
     /*　天気とかの部分のバーをつくるところ */
@@ -65,16 +75,6 @@
     [self.view addSubview:barView];
     
     /* ここまで */
-
-    
-    
-    y = 600;
-    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
-    CGRect zentaiFrame = zentai.frame;
-    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height + 100);
-    
-//    CGRect zentaiRect = CGRectMake(0,65,height,height);
-//    zentai = [[UIView alloc]initWithFrame:zentaiRect];
     
     [self calenderAuth];
     
@@ -411,7 +411,95 @@
         imageView.contentMode = UIViewContentModeScaleAspectFill;
     }
 }
+-(void)bgmstart{
+    [self.bgm stop];
+    
+    [self.bgm setNumberOfLoops:-1];  //繰り返し設定 0が１回、-1がエンドレス
+    [self.bgm prepareToPlay];
+    [self.bgm play];
+    
+    
+}
 
+//上に動かす
+- (void)moveUp{
+    [timer invalidate];
+    y -= 150;
+    
+    zentai.center = CGPointMake(160, y);
+    
+}
+
+//上に動かすボタン
+- (void)buttonUp{
+    UIButton *button =[UIButton buttonWithType:UIButtonTypeCustom];
+    
+    // ボタンの位置を設定
+    button.frame = CGRectMake(270, 30, 44, 44);
+    
+    // キャプションを設定
+    [button setBackgroundImage:[UIImage imageNamed:@"arrow 16.png"] forState:UIControlStateNormal];
+    
+    //ボタンの背景色を入れて角を丸くする
+    [button setBackgroundColor:[UIColor whiteColor]];
+    [button setAlpha:0.2];
+    [[button layer] setCornerRadius:3.0];
+    [button setClipsToBounds:YES];
+
+    // キャプションに合わせてサイズを設定
+    [button sizeToFit];
+    
+    
+    
+    // ボタンがタップされたときに呼ばれるメソッドを設定
+    [button addTarget:self
+                action:@selector(moveUp)
+                forControlEvents:UIControlEventTouchUpInside];
+    
+    // ボタンをビューに追加
+    [self.view addSubview:button];
+
+}
+
+//下に動かす
+- (void)moveDown{
+    [timer invalidate];
+    y += 150;
+    
+    zentai.center = CGPointMake(160, y);
+    
+}
+
+//下に動かすボタン
+- (void)buttonDown{
+    UIButton *button =[UIButton buttonWithType:UIButtonTypeCustom];
+    
+    // ボタンの位置を設定
+    button.frame = CGRectMake(270, 425, 44, 44);
+    
+    
+    // キャプションを設定
+    [button setBackgroundImage:[UIImage imageNamed:@"arrow 15.png"]  forState:UIControlStateNormal];
+    
+    // キャプションに合わせてサイズを設定
+    [button sizeToFit];
+    
+    //ボタンの背景色を入れて角を丸くする
+    [button setBackgroundColor:[UIColor whiteColor]];
+    [button setAlpha:0.2];
+    [[button layer] setCornerRadius:3.0];
+    [button setClipsToBounds:YES];
+    
+    
+    // ボタンがタップされたときに呼ばれるメソッドを設定
+    [button addTarget:self
+               action:@selector(moveDown)
+     forControlEvents:UIControlEventTouchUpInside];
+    
+    // ボタンをビューに追加
+    [self.view addSubview:button];
+    
+}
 
 
 @end
