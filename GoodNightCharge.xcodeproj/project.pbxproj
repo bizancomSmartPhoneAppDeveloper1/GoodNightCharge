@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		182F059C19062E00002F5FC1 /* tw059.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 182F059B19062E00002F5FC1 /* tw059.mp3 */; };
+		182F059E190649C4002F5FC1 /* tw059.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 182F059D190649C4002F5FC1 /* tw059.mp3 */; };
 		F672DAA519061C0500F2CFCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F672DAA419061C0500F2CFCB /* Foundation.framework */; };
 		F672DAA719061C0500F2CFCB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F672DAA619061C0500F2CFCB /* CoreGraphics.framework */; };
 		F672DAA919061C0500F2CFCB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F672DAA819061C0500F2CFCB /* UIKit.framework */; };
@@ -40,7 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		182F059B19062E00002F5FC1 /* tw059.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = tw059.mp3; path = "../../../粋音源/tw059.mp3"; sourceTree = "<group>"; };
+		182F059D190649C4002F5FC1 /* tw059.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tw059.mp3; sourceTree = SOURCE_ROOT; };
 		F672DAA119061C0500F2CFCB /* GoodNightCharge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoodNightCharge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F672DAA419061C0500F2CFCB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F672DAA619061C0500F2CFCB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -147,7 +147,7 @@
 		F672DAAB19061C0500F2CFCB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				182F059B19062E00002F5FC1 /* tw059.mp3 */,
+				182F059D190649C4002F5FC1 /* tw059.mp3 */,
 				F672DAE41906259F00F2CFCB /* yuu0032-009.jpg */,
 				F672DAAC19061C0500F2CFCB /* GoodNightCharge-Info.plist */,
 				F672DAAD19061C0500F2CFCB /* InfoPlist.strings */,
@@ -253,7 +253,7 @@
 			files = (
 				F672DAE51906259F00F2CFCB /* yuu0032-009.jpg in Resources */,
 				F672DABD19061C0500F2CFCB /* Images.xcassets in Resources */,
-				182F059C19062E00002F5FC1 /* tw059.mp3 in Resources */,
+				182F059E190649C4002F5FC1 /* tw059.mp3 in Resources */,
 				F672DAAF19061C0500F2CFCB /* InfoPlist.strings in Resources */,
 				F672DAB819061C0500F2CFCB /* Main.storyboard in Resources */,
 			);
