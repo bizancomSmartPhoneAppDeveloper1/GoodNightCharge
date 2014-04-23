@@ -27,19 +27,19 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    y = 600;
-    
-    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 269, 1000)];
-    
-    
-    /* 背景画像の準備*/
-    UIImage *imageData = [UIImage imageNamed:@"back1.jpg"];
-    
     //スクリーンサイズの取得
     CGRect screenSize = [[UIScreen mainScreen] bounds];
     CGFloat width = screenSize.size.width;
     CGFloat height = screenSize.size.height;
     CGRect rect = CGRectMake(0, 0, width, height);
+    
+    y = 600;
+    
+    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 269, 1000)];
+    
+    /* 背景画像の準備*/
+    UIImage *imageData = [UIImage imageNamed:@"back1.jpg"];
+    
     
     //イメージビューをつくる
     imageView = [[UIImageView alloc]initWithFrame:rect];
@@ -162,7 +162,7 @@
         
     
         // ラベルを配置していく
-        myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 600+(i*90), 230, 80)];
+            myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 600+(i*90), 230, 80)];
         
         //ラベルの四隅を丸くする
         [[myLabel layer] setCornerRadius:3.0];
@@ -429,8 +429,15 @@
          [self mainloop];
         
         //ボタンを作成
-        [self buttonUpMethod];
-        [self buttonDownNethod];
+        UIDeviceOrientation orientation = [[UIDevice currentDevice]orientation];
+        if (orientation == UIInterfaceOrientationLandscapeLeft ||
+            orientation == UIInterfaceOrientationLandscapeRight){//横向きの時
+            [self buttonUpMethodTurned];
+            [self buttonDownNethodTurned];
+        }else{//縦向きのとき
+            [self buttonUpMethod];
+            [self buttonDownNethod];
+        }
         
         //アイコン表示
         [self iconAndTempShowMethod];
@@ -501,12 +508,17 @@
         imageView.center = CGPointMake(width/2, height/2);
         imageView.bounds = CGRectMake(0, 0, width, height);
         
+        if(!self.buttonUp){
+            //たて向き用に作成
+            [self buttonUpMethod];
+            [self buttonDownNethod];
+        }else{
         //ボタンを縦向き用にする
         self.buttonUp.hidden = NO;
         self.buttonDown.hidden = NO;
         self.buttonUpTurned.hidden = YES;
         self.buttonDownTurned.hidden = YES;
-
+        }
         
     }
     else if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
@@ -518,10 +530,17 @@
         imageView.bounds = CGRectMake(0, 0, height, width);
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         
+        if(!self.buttonUpTurned){
         //ボタンを横向き用に作成
         [self buttonUpMethodTurned];
         [self buttonDownNethodTurned];
-        
+        }else{
+            self.buttonUpTurned.hidden = NO;
+            self.buttonDownTurned.hidden = NO;
+            self.buttonUp.hidden = YES;
+            self.buttonDown.hidden = YES;
+            
+        }
 
     }
 }
