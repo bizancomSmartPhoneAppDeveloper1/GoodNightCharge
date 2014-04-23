@@ -24,6 +24,11 @@
 
 @property Weather *weather;
 @property AVAudioPlayer *bgm;
+
+@property UIDevice* device;
+@property UIButton *buttonUp;
+@property UIButton *buttonDown;
+
 @property BOOL pawerstatus;
 
 

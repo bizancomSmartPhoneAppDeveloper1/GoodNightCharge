@@ -24,7 +24,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
     y = 600;
     
     zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 269, 1000)];
@@ -109,24 +108,19 @@
     [self calenderAuth];
     
     self.weather = [[Weather alloc]init];
+    
     [self firstLoadMethod];
     
-    //音源設定
-    NSString *bgmPath = [[NSBundle mainBundle]pathForResource:@"tw059" ofType:@"mp3"];  //ファイル名と拡張子が引数になる
-    NSURL *bgmUrl = [NSURL fileURLWithPath:bgmPath];  //音声ファイルの場所をurl変数に置き換える
-    
-    NSError *error;
-    self.bgm = [[AVAudioPlayer alloc]initWithContentsOfURL:bgmUrl error:&error];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self powerCheck];
+    //[self powerCheck];
     
     //電源ステータス
-    self.pawerstatus = NO;
+    //self.pawerstatus = NO;
     
 }
 
@@ -247,6 +241,15 @@
 
 - (void)firstLoadMethod
 {
+    //音源設定
+    NSString *bgmPath = [[NSBundle mainBundle]pathForResource:@"tw059" ofType:@"mp3"];  //ファイル名と拡張子が引数になる
+    NSURL *bgmUrl = [NSURL fileURLWithPath:bgmPath];  //音声ファイルの場所をurl変数に置き換える
+    
+    NSError *error;
+    self.bgm = [[AVAudioPlayer alloc]initWithContentsOfURL:bgmUrl error:&error];
+    
+    //電源状態確認
+    [self powerCheck];
     
     self.locationManager = [[CLLocationManager alloc] init];//ヘッダで宣言したインスタンスの初期化
     
@@ -317,35 +320,45 @@
 - (void)powerCheck
 {
     // デバイスのインスタンスを取得します。
-    UIDevice* device = [UIDevice currentDevice];
+    self.device = [UIDevice currentDevice];
     
     // バッテリーの状態変化の検出を有効化します。
-    device.batteryMonitoringEnabled = YES;
+    self.device.batteryMonitoringEnabled = YES;
     
     //UIDeviceクラスのbatteryLevelでバッテリーの残量を0～1の値で取得します。
-    NSLog(@"batteryLevel:%f",device.batteryLevel);
+    NSLog(@"batteryLevel:%f",self.device.batteryLevel);
     
     
     //UIDeviceクラスのbatteryStateでバッテリーの状態を取得します。
-    NSLog(@"batteryState:%d",device.batteryState);
+    NSLog(@"batteryState:%d",self.device.batteryState);
     
-    if (device.batteryState == (long)UIDeviceBatteryStateUnknown)
+    if (self.device.batteryState == (long)UIDeviceBatteryStateUnknown)
     {
         //UIDeviceBatteryStateUnknown:バッテリー状態取得不能
         NSLog(@"バッテリー状態取得不能");
     }
-    if (device.batteryState == (long)UIDeviceBatteryStateUnplugged)
+    if (self.device.batteryState == (long)UIDeviceBatteryStateUnplugged)
     {
         //UIDeviceBatteryStateUnplugged:バッテリー使用中
         NSLog(@"バッテリー使用中");
         
     }
-    if (device.batteryState == (long)UIDeviceBatteryStateCharging)
+    if (self.device.batteryState == (long)UIDeviceBatteryStateCharging)
     {
-        //UIDeviceBatteryStateCharging:バッテリー充電中
+        //UIDeviceBatteryStateCharging:バッテリー充電中。先に充電をしてもアプリ起動したらスタートする。
         NSLog(@"バッテリー充電中");
+        
+        //BGMスタート
+        [self bgmstart];
+        //エンディングロールスタート
+        [self mainloop];
+        
+        //ボタンを作成
+        [self buttonUpMethod];
+        [self buttonDownNethod];
+        
     }
-    if (device.batteryState == (long)UIDeviceBatteryStateFull)
+    if (self.device.batteryState == (long)UIDeviceBatteryStateFull)
     {
         //UIDeviceBatteryStateFull:バッテリーフル充電状態
         NSLog(@"バッテリーフル充電状態");
@@ -363,31 +376,31 @@
 - (void)deviceBatteryStateDidChangeNotification:(NSNotification*)note
 {
     NSLog(@"電源状態が変化しました");
-    //ここからカレンダー情報を取得して、エンドロールを流す関数を記載します。
-    
-    self.pawerstatus = UIDeviceBatteryStateUnplugged;
-    
-    if (self.pawerstatus == YES) {
+    //先にアプリを起動して、電源を指した時に呼ばれる
+    if (self.device.batteryState == (long)UIDeviceBatteryStateCharging) {
+        
+        //BGMスタート
          [self bgmstart];
+        //エンディングロールスタート
          [self mainloop];
         
         //ボタンを作成
-        [self buttonUp];
-        [self buttonDown];
+        [self buttonUpMethod];
+        [self buttonDownNethod];
 
-    }else if(self.pawerstatus == NO){
-        [self.bgm stop];
-        
-        
+    }else if(self.device.batteryState == (long)UIDeviceBatteryStateUnplugged){
+        [self unplugMethod];
         
     }
-    
    
     
 }
 
 -(void)mainloop
 {
+    
+    zentai.hidden = NO;
+    
     //NStimerが有効になっていなければ、timerを止める
 	if ([timer isValid])
     {
@@ -476,26 +489,27 @@
     // ボタンの位置を設定
         button.frame = CGRectMake(270, 64, 44, 44); //f.pointyの位置変更
     // キャプションを設定
-    [button setBackgroundImage:[UIImage imageNamed:@"arrow 16.png"] forState:UIControlStateNormal];
+    [self.buttonUp setBackgroundImage:[UIImage imageNamed:@"arrow 16.png"] forState:UIControlStateNormal];
     
     //ボタンの背景色を入れて角を丸くする
-    [button setBackgroundColor:[UIColor whiteColor]];
-    [button setAlpha:0.2];
-    [[button layer] setCornerRadius:3.0];
-    [button setClipsToBounds:YES];
+    [self.buttonUp setBackgroundColor:[UIColor whiteColor]];
+    [self.buttonUp setAlpha:0.2];
+    [[self.buttonUp layer] setCornerRadius:3.0];
+    [self.buttonUp setClipsToBounds:YES];
 
     // キャプションに合わせてサイズを設定
-    [button sizeToFit];
+    [self.buttonUp sizeToFit];
     
     
     
     // ボタンがタップされたときに呼ばれるメソッドを設定
-    [button addTarget:self
+    [self.buttonUp addTarget:self
                 action:@selector(moveUp)
                 forControlEvents:UIControlEventTouchUpInside];
     
     // ボタンをビューに追加
-    [self.view addSubview:button];
+    [self.view addSubview:self.buttonUp];
+    self.buttonUp.hidden = NO;
 
 }
 
@@ -516,26 +530,36 @@
         button.frame = CGRectMake(270, 425, 44, 44);
     
     // キャプションを設定
-    [button setBackgroundImage:[UIImage imageNamed:@"arrow 15.png"]  forState:UIControlStateNormal];
+    [self.buttonDown setBackgroundImage:[UIImage imageNamed:@"arrow 15.png"]  forState:UIControlStateNormal];
     
     // キャプションに合わせてサイズを設定
-    [button sizeToFit];
+    [self.buttonDown sizeToFit];
     
     //ボタンの背景色を入れて角を丸くする
-    [button setBackgroundColor:[UIColor whiteColor]];
-    [button setAlpha:0.2];
-    [[button layer] setCornerRadius:3.0];
-    [button setClipsToBounds:YES];
+    [self.buttonDown setBackgroundColor:[UIColor whiteColor]];
+    [self.buttonDown setAlpha:0.2];
+    [[self.buttonDown layer] setCornerRadius:3.0];
+    [self.buttonDown setClipsToBounds:YES];
     
     
     // ボタンがタップされたときに呼ばれるメソッドを設定
-    [button addTarget:self
+    [self.buttonDown addTarget:self
                action:@selector(moveDown)
      forControlEvents:UIControlEventTouchUpInside];
     
     // ボタンをビューに追加
-    [self.view addSubview:button];
+    [self.view addSubview:self.buttonDown];
+    self.buttonDown.hidden = NO;
     
+}
+
+
+-(void)unplugMethod{
+    [self.bgm stop];
+    zentai.hidden = YES;
+    y = 600;
+    self.buttonUp.hidden = YES;
+    self.buttonDown.hidden =  YES;
 }
 
 
