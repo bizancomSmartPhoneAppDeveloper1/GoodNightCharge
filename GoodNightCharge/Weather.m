@@ -28,11 +28,19 @@
     int thisyear = (int)dateComps.year;
     int thisMonth = (int)dateComps.month;
     int today = (int)dateComps.day;
+    int thisTime = (int)dateComps.hour;
+    
+    if (thisTime > 6) {
+        today = today + 1;
+    }
+    
+    NSLog(@"today=%d",today);
+    
     NSString *date2;
     if (thisMonth <10) {
-        date2 = [NSString stringWithFormat:@"%d-0%d-%d 12:00:00",thisyear,thisMonth,today+1];
+        date2 = [NSString stringWithFormat:@"%d-0%d-%d 03:00:00",thisyear,thisMonth,today];
     }else{
-        date2 = [NSString stringWithFormat:@"%d-%d-%d 12:00:00",thisyear,thisMonth,today+1];
+        date2 = [NSString stringWithFormat:@"%d-%d-%d 03:00:00",thisyear,thisMonth,today];
     }
     
     NSDictionary *block2;
@@ -44,7 +52,8 @@
         if ([date2 isEqualToString:self.tomorrow]) {
             //気温情報取得
             NSDictionary *main = [block2 objectForKey:@"main"];
-            self.temp = [main objectForKey:@"temp"];
+            self.temp = [main objectForKey:@"temp_max"];
+
             //華氏を摂氏に変換
             double tempInt = self.temp.doubleValue;
             double sesshi =  tempInt - 273.15;
