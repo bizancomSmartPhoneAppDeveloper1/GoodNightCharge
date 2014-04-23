@@ -500,6 +500,14 @@
         imageView.contentMode = UIViewContentModeScaleToFill;
         imageView.center = CGPointMake(width/2, height/2);
         imageView.bounds = CGRectMake(0, 0, width, height);
+        
+        //ボタンを縦向き用にする
+        self.buttonUp.hidden = NO;
+        self.buttonDown.hidden = NO;
+        self.buttonUpTurned.hidden = YES;
+        self.buttonDownTurned.hidden = YES;
+
+        
     }
     else if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
              interfaceOrientation == UIInterfaceOrientationLandscapeRight) {//横向きになったとき
@@ -509,6 +517,12 @@
         imageView.center = CGPointMake(height/2, width/2);
         imageView.bounds = CGRectMake(0, 0, height, width);
         imageView.contentMode = UIViewContentModeScaleAspectFill;
+        
+        //ボタンを横向き用に作成
+        [self buttonUpMethodTurned];
+        [self buttonDownNethodTurned];
+        
+
     }
 }
 -(void)bgmstart{
@@ -558,6 +572,7 @@
     
     // ボタンをビューに追加
     [self.view addSubview:self.buttonUp];
+    self.buttonUpTurned.hidden = YES; //f.
     self.buttonUp.hidden = NO;
 
 }
@@ -598,6 +613,7 @@
     
     // ボタンをビューに追加
     [self.view addSubview:self.buttonDown];
+    self.buttonDownTurned.hidden = YES; //f.
     self.buttonDown.hidden = NO;
     
 }
@@ -626,6 +642,72 @@
                                           otherButtonTitles:@"OK",nil];
     [alert show];
 }
+//上に動かすボタン 横向き用
+- (void)buttonUpMethodTurned{
+    self.buttonUpTurned =[UIButton buttonWithType:UIButtonTypeCustom];
+    
+    // ボタンの位置を設定
+    CGRect screenSize = [[UIScreen mainScreen] bounds];    //スクリーンサイズの取得
+    self.buttonUpTurned.frame = CGRectMake(screenSize.size.height-56, 80, 44, 44);//よこむきのばしょにする
+    
+    // キャプションを設定
+    [self.buttonUpTurned setBackgroundImage:[UIImage imageNamed:@"arrow 16.png"] forState:UIControlStateNormal];
+    
+    //ボタンの背景色を入れて角を丸くする
+    [self.buttonUpTurned setBackgroundColor:[UIColor whiteColor]];
+    [self.buttonUpTurned setAlpha:0.2];
+    [[self.buttonUpTurned layer] setCornerRadius:3.0];
+    [self.buttonUpTurned setClipsToBounds:YES];
+    
+    // キャプションに合わせてサイズを設定
+    [self.buttonUpTurned sizeToFit];
+    
+    
+    
+    // ボタンがタップされたときに呼ばれるメソッドを設定
+    [self.buttonUpTurned addTarget:self
+                      action:@selector(moveUp)
+            forControlEvents:UIControlEventTouchUpInside];
+    
+    // ボタンをビューに追加
+    [self.view addSubview:self.buttonUpTurned];
+    self.buttonUp.hidden = YES;
+    self.buttonUpTurned.hidden = NO;
+    
+}
+//下に動かすボタン 横向き用
+- (void)buttonDownNethodTurned{
+    self.buttonDownTurned =[UIButton buttonWithType:UIButtonTypeCustom];
+    
+    // ボタンの位置を設定
+    CGRect screenSize = [[UIScreen mainScreen] bounds];    //スクリーンサイズの取得
+    self.buttonDownTurned.frame = CGRectMake(screenSize.size.height-56, screenSize.size.width-56, 44, 44);
+    
+    // キャプションを設定
+    [self.buttonDownTurned setBackgroundImage:[UIImage imageNamed:@"arrow 15.png"]  forState:UIControlStateNormal];
+    
+    // キャプションに合わせてサイズを設定
+    [self.buttonDownTurned sizeToFit];
+    
+    //ボタンの背景色を入れて角を丸くする
+    [self.buttonDownTurned setBackgroundColor:[UIColor whiteColor]];
+    [self.buttonDownTurned setAlpha:0.2];
+    [[self.buttonDownTurned layer] setCornerRadius:3.0];
+    [self.buttonDownTurned setClipsToBounds:YES];
+    
+    
+    // ボタンがタップされたときに呼ばれるメソッドを設定
+    [self.buttonDownTurned addTarget:self
+                        action:@selector(moveDown)
+              forControlEvents:UIControlEventTouchUpInside];
+    
+    // ボタンをビューに追加
+    [self.view addSubview:self.buttonDownTurned];
+    self.buttonDown.hidden = YES;
+    self.buttonDownTurned.hidden = NO;
+    
+}
+
 
 
 @end

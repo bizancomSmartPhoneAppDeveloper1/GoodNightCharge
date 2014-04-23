@@ -28,6 +28,9 @@
 @property UIDevice* device;
 @property UIButton *buttonUp;
 @property UIButton *buttonDown;
+@property UIButton *buttonUpTurned;
+@property UIButton *buttonDownTurned;
+
 
 
 
