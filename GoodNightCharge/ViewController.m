@@ -307,7 +307,8 @@
     //気温ラベル生成
     degree = [[UILabel alloc]initWithFrame:CGRectMake(10, 43, 70, 20)];
     NSLog(@"iconView=%@",self.weather.temp);
-    degree.text = self.weather.temp;
+    //degree.text = self.weather.temp;
+    degree.text = [NSString stringWithFormat:@"%@℃",self.weather.temp];
     degree.font = [UIFont fontWithName:@"AppleGothic" size:18];
     degree.textColor = [UIColor whiteColor];
     degree.textAlignment = NSTextAlignmentRight;
