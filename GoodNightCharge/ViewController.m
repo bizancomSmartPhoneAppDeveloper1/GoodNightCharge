@@ -477,7 +477,7 @@
     
     zentai.center = CGPointMake(160, y);
     
-    if (y < -70)
+    if (y < -17)
     {
         [timer invalidate];
     }
@@ -534,7 +534,7 @@
     self.buttonUp =[UIButton buttonWithType:UIButtonTypeCustom];
     
     // ボタンの位置を設定
-    self.buttonUp.frame = CGRectMake(270, 30, 44, 44);
+    self.buttonUp.frame = CGRectMake(270, 80, 44, 44);
     
     // キャプションを設定
     [self.buttonUp setBackgroundImage:[UIImage imageNamed:@"arrow 16.png"] forState:UIControlStateNormal];
@@ -575,7 +575,7 @@
     self.buttonDown =[UIButton buttonWithType:UIButtonTypeCustom];
     
     // ボタンの位置を設定
-    self.buttonDown.frame = CGRectMake(270, 425, 44, 44);
+    self.buttonDown.frame = CGRectMake(270, 394, 44, 44);
     
     // キャプションを設定
     [self.buttonDown setBackgroundImage:[UIImage imageNamed:@"arrow 15.png"]  forState:UIControlStateNormal];
