@@ -29,8 +29,6 @@
 @property UIButton *buttonUp;
 @property UIButton *buttonDown;
 
-@property BOOL pawerstatus;
-
 
 
 @end

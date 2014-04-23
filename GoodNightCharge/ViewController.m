@@ -16,6 +16,9 @@
     EKEventStore *store;
     UIView *zentai;
     UIImageView *imageView; //f.
+    UILabel *tomorrow;
+    UILabel *degree;
+    UIImageView *weatherIconView;
 }
 
 @end
@@ -60,50 +63,6 @@
 //    zentai.frame = zentaiFrame;
     
     
-    /*　天気、tomorrow、文字列表示部分の生成 */
-    
-    //取得した天気、気温を表示するビュー
-    CGRect weatherRect = CGRectMake(0, 0, height, 64);
-    UIView *weatherView = [[UIView alloc]initWithFrame:weatherRect];
-//    weatherView.backgroundColor = [UIColor redColor]; //範囲確認用着色
-    [self.view addSubview:weatherView];
-    
-    //文字ラベル生成
-    UILabel *tomorrow = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, 78, 20)];
-    tomorrow.text = @"tomorrow";
-    tomorrow.font = [UIFont fontWithName:@"AppleGothic" size:15];
-    tomorrow.textColor = [UIColor whiteColor];
-//    tomorrow.backgroundColor = [UIColor blackColor];//範囲確認用着色
-    [weatherView addSubview:tomorrow];
-    
-    
-    //気温ラベル生成
-    UILabel *degree = [[UILabel alloc]initWithFrame:CGRectMake(10, 43, 70, 20)];
-    degree.text = @"13";
-    degree.font = [UIFont fontWithName:@"AppleGothic" size:18];
-    degree.textColor = [UIColor whiteColor];
-    degree.textAlignment = NSTextAlignmentRight;
-//    degree.backgroundColor = [UIColor blackColor];//範囲確認用着色
-    [weatherView addSubview:degree];
-
-    
-    //天気アイコン表示箇所指定
-    CGRect weatherIcon = CGRectMake(84, 22, 40 , 40);
-    UIImageView *weatherIconView = [[UIImageView alloc]initWithFrame:weatherIcon];
-//    weatherIconView.backgroundColor = [UIColor blueColor];//範囲確認用着色
-    UIImage *weatherIconImage = [UIImage imageNamed:@"01d.png"];//表示確認用
-    weatherIconView.image = weatherIconImage;
-    [self.view addSubview:weatherIconView];
-    
-    
-    //ステータスバー部分
-    CGRect barRect = CGRectMake(0, 0, height, 20);
-    UIView *barView = [[UIView alloc]initWithFrame:barRect];
-    barView.backgroundColor = [UIColor whiteColor];
-    barView.alpha = 0.3;
-    [self.view addSubview:barView];
-    
-    /* ここまで */
     
     [self calenderAuth];
     
@@ -117,10 +76,6 @@
 {
     [super viewDidLoad];
     
-    //[self powerCheck];
-    
-    //電源ステータス
-    //self.pawerstatus = NO;
     
 }
 
@@ -169,9 +124,9 @@
                                        NSMinuteCalendarUnit |
                                        NSSecondCalendarUnit
                                                   fromDate:e.startDate];
-        NSInteger thisHour = (int)dateComps.hour;
+        int thisHour = (int)dateComps.hour;
         NSLog(@"時間＝%d",thisHour);
-        NSInteger thisMinute = (int)dateComps.minute;
+        int thisMinute = (int)dateComps.minute;
         NSLog(@"分＝%d",thisMinute);
         
         NSString *thisMinuteString;
@@ -251,6 +206,7 @@
     //電源状態確認
     [self powerCheck];
     
+
     self.locationManager = [[CLLocationManager alloc] init];//ヘッダで宣言したインスタンスの初期化
     
     
@@ -264,6 +220,7 @@
         [self.weather alertViewMethod];
         
     }
+    
     
 }
 
@@ -282,7 +239,17 @@
     [self.locationManager stopUpdatingLocation];
     //本日の天気情報を取得
     [self urlWithAddress];
+    [self iconAndTempViewMethod];
     
+    
+    if (self.device.batteryState == (long)UIDeviceBatteryStateCharging) {
+        [self iconAndTempShowMethod];
+    }else{
+        [self iconAndTempHiddenMethod];
+    }
+    
+    
+
 }
 
 
@@ -297,6 +264,95 @@
 }
 
 
+- (void)iconAndTempViewMethod{
+    
+    /*　天気、tomorrow、文字列表示部分の生成 */
+    
+    //スクリーンサイズの取得
+    CGRect screenSize = [[UIScreen mainScreen] bounds];
+    CGFloat height = screenSize.size.height;
+    
+    //取得した天気、気温を表示するビュー
+    CGRect weatherRect = CGRectMake(0, 0, height, 64);
+    UIView *weatherView = [[UIView alloc]initWithFrame:weatherRect];
+    //    weatherView.backgroundColor = [UIColor redColor]; //範囲確認用着色
+    [self.view addSubview:weatherView];
+    
+    //文字ラベル生成。先に現在時刻を取得
+    NSDate *date = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComps = [calendar components:NSYearCalendarUnit |
+                                   NSMonthCalendarUnit  |
+                                   NSDayCalendarUnit    |
+                                   NSHourCalendarUnit   |
+                                   NSMinuteCalendarUnit |
+                                   NSSecondCalendarUnit
+                                              fromDate:date];
+    
+    int thisTime = (int)dateComps.hour;
+    
+    tomorrow = [[UILabel alloc]initWithFrame:CGRectMake(10, 23, 78, 20)];
+    
+    if (thisTime > 9) {
+        tomorrow.text = @"tomorrow";
+    }else{
+        tomorrow.text = @"today";
+    }
+    tomorrow.font = [UIFont fontWithName:@"AppleGothic" size:15];
+    tomorrow.textColor = [UIColor whiteColor];
+    //    tomorrow.backgroundColor = [UIColor blackColor];//範囲確認用着色
+    [weatherView addSubview:tomorrow];
+    
+    
+    //気温ラベル生成
+    degree = [[UILabel alloc]initWithFrame:CGRectMake(10, 43, 70, 20)];
+    NSLog(@"iconView=%@",self.weather.temp);
+    degree.text = self.weather.temp;
+    degree.font = [UIFont fontWithName:@"AppleGothic" size:18];
+    degree.textColor = [UIColor whiteColor];
+    degree.textAlignment = NSTextAlignmentRight;
+    //    degree.backgroundColor = [UIColor blackColor];//範囲確認用着色
+    [weatherView addSubview:degree];
+    
+    
+    //天気アイコン表示箇所指定
+    CGRect weatherIcon = CGRectMake(84, 22, 40 , 40);
+    weatherIconView = [[UIImageView alloc]initWithFrame:weatherIcon];
+    NSLog(@"iconView=%@",self.weather.icon);
+    //    weatherIconView.backgroundColor = [UIColor blueColor];//範囲確認用着色
+    UIImage *weatherIconImage = [UIImage imageNamed:self.weather.icon];//表示確認用
+    weatherIconView.image = weatherIconImage;
+    [self.view addSubview:weatherIconView];
+    
+    
+    //ステータスバー部分
+    CGRect barRect = CGRectMake(0, 0, height, 20);
+    UIView *barView = [[UIView alloc]initWithFrame:barRect];
+    barView.backgroundColor = [UIColor whiteColor];
+    barView.alpha = 0.3;
+    [self.view addSubview:barView];
+    
+    //アイコンを隠す
+    [self iconAndTempHiddenMethod];
+    
+    /* ここまで */
+    
+}
+
+- (void)iconAndTempShowMethod{
+
+    tomorrow.hidden = NO;
+    degree.hidden = NO;
+    weatherIconView.hidden = NO;
+}
+
+- (void)iconAndTempHiddenMethod{
+    
+    tomorrow.hidden = YES;
+    degree.hidden = YES;
+    weatherIconView.hidden = YES;
+    
+}
 
 
 //位置情報もしくは住所情報からWEBAPIにアクセスする関数
@@ -330,32 +386,19 @@
     
     
     //UIDeviceクラスのbatteryStateでバッテリーの状態を取得します。
-    NSLog(@"batteryState:%d",self.device.batteryState);
     
-    if (self.device.batteryState == (long)UIDeviceBatteryStateUnknown)
-    {
-        //UIDeviceBatteryStateUnknown:バッテリー状態取得不能
-        NSLog(@"バッテリー状態取得不能");
+    
+    if (self.device.batteryState == (long)UIDeviceBatteryStateUnknown) {
+        [self alertViewMethod];
     }
-    if (self.device.batteryState == (long)UIDeviceBatteryStateUnplugged)
-    {
-        //UIDeviceBatteryStateUnplugged:バッテリー使用中
-        NSLog(@"バッテリー使用中");
-        
+    if (self.device.batteryState == (long)UIDeviceBatteryStateUnplugged) {
+        [self alertViewMethod];
     }
+    
     if (self.device.batteryState == (long)UIDeviceBatteryStateCharging)
     {
-        //UIDeviceBatteryStateCharging:バッテリー充電中。先に充電をしてもアプリ起動したらスタートする。
+        //UIDeviceBatteryStateCharging:バッテリー充電中。
         NSLog(@"バッテリー充電中");
-        
-        //BGMスタート
-        [self bgmstart];
-        //エンディングロールスタート
-        [self mainloop];
-        
-        //ボタンを作成
-        [self buttonUpMethod];
-        [self buttonDownNethod];
         
     }
     if (self.device.batteryState == (long)UIDeviceBatteryStateFull)
@@ -387,10 +430,14 @@
         //ボタンを作成
         [self buttonUpMethod];
         [self buttonDownNethod];
+        
+        //アイコン表示
+        [self iconAndTempShowMethod];
 
     }else if(self.device.batteryState == (long)UIDeviceBatteryStateUnplugged){
+
         [self unplugMethod];
-        
+
     }
    
     
@@ -483,11 +530,12 @@
 }
 
 //上に動かすボタン
-- (void)buttonUp{
-    UIButton *button =[UIButton buttonWithType:UIButtonTypeCustom];
-
+- (void)buttonUpMethod{
+    self.buttonUp =[UIButton buttonWithType:UIButtonTypeCustom];
+    
     // ボタンの位置を設定
-        button.frame = CGRectMake(270, 64, 44, 44); //f.pointyの位置変更
+    self.buttonUp.frame = CGRectMake(270, 30, 44, 44);
+    
     // キャプションを設定
     [self.buttonUp setBackgroundImage:[UIImage imageNamed:@"arrow 16.png"] forState:UIControlStateNormal];
     
@@ -523,11 +571,11 @@
 }
 
 //下に動かすボタン
-- (void)buttonDown{
-    UIButton *button =[UIButton buttonWithType:UIButtonTypeCustom];
-
+- (void)buttonDownNethod{
+    self.buttonDown =[UIButton buttonWithType:UIButtonTypeCustom];
+    
     // ボタンの位置を設定
-        button.frame = CGRectMake(270, 425, 44, 44);
+    self.buttonDown.frame = CGRectMake(270, 425, 44, 44);
     
     // キャプションを設定
     [self.buttonDown setBackgroundImage:[UIImage imageNamed:@"arrow 15.png"]  forState:UIControlStateNormal];
@@ -560,6 +608,22 @@
     y = 600;
     self.buttonUp.hidden = YES;
     self.buttonDown.hidden =  YES;
+    //アイコン非表示
+    [self iconAndTempHiddenMethod];
+}
+
+
+//読み込み失敗時に呼ばれる関数
+- (void)alertViewMethod{
+    
+    NSString *localize = NSLocalizedString(@"key", nil);
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:localize
+                                                    message:nil
+                                                   delegate:self
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:@"OK",nil];
+    [alert show];
 }
 
 

@@ -30,7 +30,7 @@
     int today = (int)dateComps.day;
     int thisTime = (int)dateComps.hour;
     
-    if (thisTime > 6) {
+    if (thisTime > 9) {
         today = today + 1;
     }
     
