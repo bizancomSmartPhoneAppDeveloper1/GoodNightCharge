@@ -19,6 +19,7 @@
     UILabel *tomorrow;
     UILabel *degree;
     UIImageView *weatherIconView;
+    UIImageView *weatherCIconView;
 }
 
 @end
@@ -318,7 +319,7 @@
     
     //度数アイコン表示箇所指定
     CGRect weatherCIcon = CGRectMake(70, 36, 25 , 25);
-    UIImageView *weatherCIconView = [[UIImageView alloc]initWithFrame:weatherCIcon];
+    weatherCIconView = [[UIImageView alloc]initWithFrame:weatherCIcon];
     NSLog(@"iconView=%@",self.weather.icon);
     //weatherCIconView.backgroundColor = [UIColor blueColor];//範囲確認用着色
     UIImage *weatherCIconImage = [UIImage imageNamed:@"iconC.png"];
@@ -356,6 +357,7 @@
     tomorrow.hidden = NO;
     degree.hidden = NO;
     weatherIconView.hidden = NO;
+    weatherCIconView.hidden = NO;
 }
 
 - (void)iconAndTempHiddenMethod{
@@ -363,6 +365,7 @@
     tomorrow.hidden = YES;
     degree.hidden = YES;
     weatherIconView.hidden = YES;
+    weatherCIconView.hidden = YES;
     
 }
 
