@@ -557,7 +557,7 @@
 //上に動かす
 - (void)moveUp{
     [timer invalidate];
-    y -= 150;
+    y -= 3;
     
     zentai.center = CGPointMake(160, y);
     
