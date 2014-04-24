@@ -557,7 +557,7 @@
 //上に動かす
 - (void)moveUp{
     [timer invalidate];
-    y -= 150;
+    y -= 2;
     
     zentai.center = CGPointMake(160, y);
     
@@ -587,7 +587,7 @@
     // ボタンがタップされたときに呼ばれるメソッドを設定
     [self.buttonUp addTarget:self
                 action:@selector(moveUp)
-                forControlEvents:UIControlEventTouchUpInside];
+                forControlEvents:UIControlEventTouchDown];
     
     // ボタンをビューに追加
     [self.view addSubview:self.buttonUp];
@@ -599,7 +599,7 @@
 //下に動かす
 - (void)moveDown{
     [timer invalidate];
-    y += 150;
+    y += 2;
     
     zentai.center = CGPointMake(160, y);
     
@@ -628,7 +628,7 @@
     // ボタンがタップされたときに呼ばれるメソッドを設定
     [self.buttonDown addTarget:self
                action:@selector(moveDown)
-     forControlEvents:UIControlEventTouchUpInside];
+     forControlEvents:UIControlEventTouchDown];
     
     // ボタンをビューに追加
     [self.view addSubview:self.buttonDown];
