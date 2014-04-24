@@ -568,7 +568,7 @@
 //上に動かす
 - (void)moveUp{
     [timer invalidate];
-    y -= 150;
+    y -= 3;
     
     zentai.center = CGPointMake(160, y);
     
@@ -593,12 +593,15 @@
     // キャプションに合わせてサイズを設定
     [self.buttonUp sizeToFit];
     
-    
+    //長押しされた時に呼ばれるメソッド設定
+    UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
+                                                                                           action:@selector(moveUp)];
+    [self.buttonUp addGestureRecognizer:longpress];
     
     // ボタンがタップされたときに呼ばれるメソッドを設定
-    [self.buttonUp addTarget:self
-                action:@selector(moveUp)
-                forControlEvents:UIControlEventTouchUpInside];
+//    [self.buttonUp addTarget:self
+//                action:@selector(moveUp)
+//                forControlEvents:UIControlEventTouchUpInside];
     
     // ボタンをビューに追加
     [self.view addSubview:self.buttonUp];
@@ -610,7 +613,7 @@
 //下に動かす
 - (void)moveDown{
     [timer invalidate];
-    y += 150;
+    y += 3;
     
     zentai.center = CGPointMake(160, y);
     
@@ -635,11 +638,15 @@
 //    [[self.buttonDown layer] setCornerRadius:3.0];
 //    [self.buttonDown setClipsToBounds:YES];
     
-    
-    // ボタンがタップされたときに呼ばれるメソッドを設定
-    [self.buttonDown addTarget:self
-               action:@selector(moveDown)
-     forControlEvents:UIControlEventTouchUpInside];
+    //長押しした時に呼ばれるメソッド設定
+    UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
+                                                                                           action:@selector(moveDown)];
+    [self.buttonUp addGestureRecognizer:longpress];
+
+//    // ボタンがタップされたときに呼ばれるメソッドを設定
+//    [self.buttonDown addTarget:self
+//               action:@selector(moveDown)
+//     forControlEvents:UIControlEventTouchUpInside];
     
     // ボタンをビューに追加
     [self.view addSubview:self.buttonDown];
@@ -688,13 +695,17 @@
     // キャプションに合わせてサイズを設定
     [self.buttonUpTurned sizeToFit];
     
+    //長押しした時に呼ばれるメソッド設定
+    UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
+                                                                                           action:@selector(moveUp)];
+    [self.buttonUp addGestureRecognizer:longpress];
+
     
-    
-    // ボタンがタップされたときに呼ばれるメソッドを設定
-    [self.buttonUpTurned addTarget:self
-                      action:@selector(moveUp)
-            forControlEvents:UIControlEventTouchUpInside];
-    
+//    // ボタンがタップされたときに呼ばれるメソッドを設定
+//    [self.buttonUpTurned addTarget:self
+//                      action:@selector(moveUp)
+//            forControlEvents:UIControlEventTouchUpInside];
+//    
     // ボタンをビューに追加
     [self.view addSubview:self.buttonUpTurned];
     self.buttonUp.hidden = YES;
@@ -717,10 +728,15 @@
     
     [self.buttonDownTurned setAlpha:0.3];
     
-    // ボタンがタップされたときに呼ばれるメソッドを設定
-    [self.buttonDownTurned addTarget:self
-                        action:@selector(moveDown)
-              forControlEvents:UIControlEventTouchUpInside];
+    //長押しした時に呼ばれるメソッド設定
+    UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
+                                                                                           action:@selector(moveDown)];
+    [self.buttonUp addGestureRecognizer:longpress];
+
+//    // ボタンがタップされたときに呼ばれるメソッドを設定
+//    [self.buttonDownTurned addTarget:self
+//                        action:@selector(moveDown)
+//              forControlEvents:UIControlEventTouchUpInside];
     
     // ボタンをビューに追加
     [self.view addSubview:self.buttonDownTurned];
