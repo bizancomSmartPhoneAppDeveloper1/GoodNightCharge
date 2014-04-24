@@ -728,10 +728,15 @@
     
     [self.buttonDownTurned setAlpha:0.3];
     
-    // ボタンがタップされたときに呼ばれるメソッドを設定
-    [self.buttonDownTurned addTarget:self
-                        action:@selector(moveDown)
-              forControlEvents:UIControlEventTouchUpInside];
+    //長押しした時に呼ばれるメソッド設定
+    UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
+                                                                                           action:@selector(moveDown)];
+    [self.buttonUp addGestureRecognizer:longpress];
+
+//    // ボタンがタップされたときに呼ばれるメソッドを設定
+//    [self.buttonDownTurned addTarget:self
+//                        action:@selector(moveDown)
+//              forControlEvents:UIControlEventTouchUpInside];
     
     // ボタンをビューに追加
     [self.view addSubview:self.buttonDownTurned];
