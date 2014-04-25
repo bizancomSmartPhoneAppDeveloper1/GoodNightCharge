@@ -596,6 +596,10 @@
     // キャプションに合わせてサイズを設定
     [self.buttonUp sizeToFit];
     
+    [self.view addSubview:self.buttonUp];
+    self.buttonUpTurned.hidden = YES; //f.
+    self.buttonUp.hidden = NO;
+    
     //長押しされた時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
                                                                                            action:@selector(moveUp)];
@@ -615,11 +619,11 @@
 //                action:@selector(moveUp)
 //                forControlEvents:UIControlEventTouchUpInside];
     
-    // ボタンをビューに追加
-    [self.view addSubview:self.buttonUp];
-    self.buttonUpTurned.hidden = YES; //f.
-    self.buttonUp.hidden = NO;
-
+//    // ボタンをビューに追加
+//    [self.view addSubview:self.buttonUp];
+//    self.buttonUpTurned.hidden = YES; //f.
+//    self.buttonUp.hidden = NO;
+//
 }
 
 //下に動かす
