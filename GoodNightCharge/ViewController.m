@@ -19,6 +19,7 @@
     UILabel *tomorrow;
     UILabel *degree;
     UIImageView *weatherIconView;
+    UIImageView *weatherCIconView;
 }
 
 @end
@@ -275,7 +276,8 @@
     //取得した天気、気温を表示するビュー
     CGRect weatherRect = CGRectMake(0, 0, height, 64);
     UIView *weatherView = [[UIView alloc]initWithFrame:weatherRect];
-    //    weatherView.backgroundColor = [UIColor redColor]; //範囲確認用着色
+//    weatherView.backgroundColor = [UIColor whiteColor]; //範囲確認用着色
+//    weatherView.alpha = 0.2;
     [self.view addSubview:weatherView];
     
     //文字ラベル生成。先に現在時刻を取得
@@ -305,23 +307,33 @@
     
     
     //気温ラベル生成
-    degree = [[UILabel alloc]initWithFrame:CGRectMake(10, 43, 70, 20)];
+    degree = [[UILabel alloc]initWithFrame:CGRectMake(5, 43, 65, 20)];
     NSLog(@"iconView=%@",self.weather.temp);
     //degree.text = self.weather.temp;
-    degree.text = [NSString stringWithFormat:@"%@℃",self.weather.temp];
+    degree.text = [NSString stringWithFormat:@"%@",self.weather.temp];
     degree.font = [UIFont fontWithName:@"AppleGothic" size:18];
     degree.textColor = [UIColor whiteColor];
     degree.textAlignment = NSTextAlignmentRight;
-    //    degree.backgroundColor = [UIColor blackColor];//範囲確認用着色
+    //degree.backgroundColor = [UIColor blackColor];//範囲確認用着色
     [weatherView addSubview:degree];
+    
+    //度数アイコン表示箇所指定
+    CGRect weatherCIcon = CGRectMake(70, 36, 25 , 25);
+    weatherCIconView = [[UIImageView alloc]initWithFrame:weatherCIcon];
+    NSLog(@"iconView=%@",self.weather.icon);
+    //weatherCIconView.backgroundColor = [UIColor blueColor];//範囲確認用着色
+    UIImage *weatherCIconImage = [UIImage imageNamed:@"iconC.png"];
+    weatherCIconView.image = weatherCIconImage;
+    [self.view addSubview:weatherCIconView];
+
     
     
     //天気アイコン表示箇所指定
-    CGRect weatherIcon = CGRectMake(84, 22, 40 , 40);
+    CGRect weatherIcon = CGRectMake(90, 22, 40 , 40);
     weatherIconView = [[UIImageView alloc]initWithFrame:weatherIcon];
     NSLog(@"iconView=%@",self.weather.icon);
-    //    weatherIconView.backgroundColor = [UIColor blueColor];//範囲確認用着色
-    UIImage *weatherIconImage = [UIImage imageNamed:self.weather.icon];//表示確認用
+    //weatherIconView.backgroundColor = [UIColor blueColor];//範囲確認用着色
+    UIImage *weatherIconImage = [UIImage imageNamed:self.weather.icon];
     weatherIconView.image = weatherIconImage;
     [self.view addSubview:weatherIconView];
     
@@ -345,6 +357,7 @@
     tomorrow.hidden = NO;
     degree.hidden = NO;
     weatherIconView.hidden = NO;
+    weatherCIconView.hidden = NO;
 }
 
 - (void)iconAndTempHiddenMethod{
@@ -352,6 +365,7 @@
     tomorrow.hidden = YES;
     degree.hidden = YES;
     weatherIconView.hidden = YES;
+    weatherCIconView.hidden = YES;
     
 }
 
@@ -571,17 +585,18 @@
     self.buttonUp.frame = CGRectMake(270, 80, 44, 44);
     
     // キャプションを設定
-    [self.buttonUp setBackgroundImage:[UIImage imageNamed:@"arrow 16.png"] forState:UIControlStateNormal];
+    [self.buttonUp setBackgroundImage:[UIImage imageNamed:@"arrow2.png"] forState:UIControlStateNormal];
     
-    //ボタンの背景色を入れて角を丸くする
-    [self.buttonUp setBackgroundColor:[UIColor whiteColor]];
-    [self.buttonUp setAlpha:0.2];
-    [[self.buttonUp layer] setCornerRadius:3.0];
-    [self.buttonUp setClipsToBounds:YES];
-
+//    //ボタンの背景色を入れて角を丸くする
+//    [self.buttonUp setBackgroundColor:[UIColor whiteColor]];
+    [self.buttonUp setAlpha:0.3];
+//    [[self.buttonUp layer] setCornerRadius:3.0];
+//    [self.buttonUp setClipsToBounds:YES];
+//
     // キャプションに合わせてサイズを設定
     [self.buttonUp sizeToFit];
     
+    // ボタンをビューに追加
     [self.view addSubview:self.buttonUp];
     self.buttonUpTurned.hidden = YES; //f.
     self.buttonUp.hidden = NO;
@@ -629,23 +644,28 @@
     self.buttonDown.frame = CGRectMake(270, 394, 44, 44);
     
     // キャプションを設定
-    [self.buttonDown setBackgroundImage:[UIImage imageNamed:@"arrow 15.png"]  forState:UIControlStateNormal];
+    [self.buttonDown setBackgroundImage:[UIImage imageNamed:@"arrow1.png"]  forState:UIControlStateNormal];
     
     // キャプションに合わせてサイズを設定
     [self.buttonDown sizeToFit];
     
-    //ボタンの背景色を入れて角を丸くする
-    [self.buttonDown setBackgroundColor:[UIColor whiteColor]];
-    [self.buttonDown setAlpha:0.2];
-    [[self.buttonDown layer] setCornerRadius:3.0];
-    [self.buttonDown setClipsToBounds:YES];
+//    //ボタンの背景色を入れて角を丸くする
+//    [self.buttonDown setBackgroundColor:[UIColor whiteColor]];
+    [self.buttonDown setAlpha:0.3];
+//    [[self.buttonDown layer] setCornerRadius:3.0];
+//    [self.buttonDown setClipsToBounds:YES];
     
     //長押しした時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
                                                                                            action:@selector(moveDown)];
     
+    // ボタンをビューに追加
+    [self.view addSubview:self.buttonDown];
+    self.buttonDownTurned.hidden = YES; //f.
+    self.buttonDown.hidden = NO;
+    
     // 長押しが認識される時間を設定
-    longpress.minimumPressDuration = 1.0;
+    longpress.minimumPressDuration = 0.5;
     
     // 長押し中に動いても許容されるピクセル数を設定
     longpress.allowableMovement = 10.0;
@@ -657,10 +677,10 @@
 //               action:@selector(moveDown)
 //     forControlEvents:UIControlEventTouchUpInside];
     
-    // ボタンをビューに追加
-    [self.view addSubview:self.buttonDown];
-    self.buttonDownTurned.hidden = YES; //f.
-    self.buttonDown.hidden = NO;
+//    // ボタンをビューに追加
+//    [self.view addSubview:self.buttonDown];
+//    self.buttonDownTurned.hidden = YES; //f.
+//    self.buttonDown.hidden = NO;
     
 }
 
@@ -697,23 +717,24 @@
     self.buttonUpTurned.frame = CGRectMake(screenSize.size.height-56, 80, 44, 44);//よこむきのばしょにする
     
     // キャプションを設定
-    [self.buttonUpTurned setBackgroundImage:[UIImage imageNamed:@"arrow 16.png"] forState:UIControlStateNormal];
+    [self.buttonUpTurned setBackgroundImage:[UIImage imageNamed:@"arrow2.png"] forState:UIControlStateNormal];
     
-    //ボタンの背景色を入れて角を丸くする
-    [self.buttonUpTurned setBackgroundColor:[UIColor whiteColor]];
-    [self.buttonUpTurned setAlpha:0.2];
-    [[self.buttonUpTurned layer] setCornerRadius:3.0];
-    [self.buttonUpTurned setClipsToBounds:YES];
+    [self.buttonUpTurned setAlpha:0.3];
     
     // キャプションに合わせてサイズを設定
     [self.buttonUpTurned sizeToFit];
+    
+    // ボタンをビューに追加
+    [self.view addSubview:self.buttonUpTurned];
+    self.buttonUp.hidden = YES;
+    self.buttonUpTurned.hidden = NO;
     
     //長押しした時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
                                                                                            action:@selector(moveUp)];
     
     // 長押しが認識される時間を設定
-    longpress.minimumPressDuration = 1.0;
+    longpress.minimumPressDuration = 0.5;
     
     // 長押し中に動いても許容されるピクセル数を設定
     longpress.allowableMovement = 10.0;
@@ -726,10 +747,10 @@
 //                      action:@selector(moveUp)
 //            forControlEvents:UIControlEventTouchUpInside];
 //    
-    // ボタンをビューに追加
-    [self.view addSubview:self.buttonUpTurned];
-    self.buttonUp.hidden = YES;
-    self.buttonUpTurned.hidden = NO;
+//    // ボタンをビューに追加
+//    [self.view addSubview:self.buttonUpTurned];
+//    self.buttonUp.hidden = YES;
+//    self.buttonUpTurned.hidden = NO;
     
 }
 //下に動かすボタン 横向き用
@@ -741,16 +762,17 @@
     self.buttonDownTurned.frame = CGRectMake(screenSize.size.height-56, screenSize.size.width-56, 44, 44);
     
     // キャプションを設定
-    [self.buttonDownTurned setBackgroundImage:[UIImage imageNamed:@"arrow 15.png"]  forState:UIControlStateNormal];
+    [self.buttonDownTurned setBackgroundImage:[UIImage imageNamed:@"arrow1.png"]  forState:UIControlStateNormal];
     
     // キャプションに合わせてサイズを設定
     [self.buttonDownTurned sizeToFit];
     
-    //ボタンの背景色を入れて角を丸くする
-    [self.buttonDownTurned setBackgroundColor:[UIColor whiteColor]];
-    [self.buttonDownTurned setAlpha:0.2];
-    [[self.buttonDownTurned layer] setCornerRadius:3.0];
-    [self.buttonDownTurned setClipsToBounds:YES];
+    [self.buttonDownTurned setAlpha:0.3];
+    
+    // ボタンをビューに追加
+    [self.view addSubview:self.buttonDownTurned];
+    self.buttonDown.hidden = YES;
+    self.buttonDownTurned.hidden = NO;
     
     //長押しした時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
@@ -769,10 +791,10 @@
 //                        action:@selector(moveDown)
 //              forControlEvents:UIControlEventTouchUpInside];
     
-    // ボタンをビューに追加
-    [self.view addSubview:self.buttonDownTurned];
-    self.buttonDown.hidden = YES;
-    self.buttonDownTurned.hidden = NO;
+//    // ボタンをビューに追加
+//    [self.view addSubview:self.buttonDownTurned];
+//    self.buttonDown.hidden = YES;
+//    self.buttonDownTurned.hidden = NO;
     
 }
 
