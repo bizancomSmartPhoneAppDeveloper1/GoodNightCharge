@@ -585,6 +585,12 @@
     //長押しされた時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
                                                                                            action:@selector(moveUp)];
+    
+ 
+    
+    // 長押しが認識される時間を設定
+    longpress.minimumPressDuration = 1.0;
+    
     [self.buttonUp addGestureRecognizer:longpress];
     
     // ボタンがタップされたときに呼ばれるメソッドを設定
@@ -630,6 +636,10 @@
     //長押しした時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
                                                                                            action:@selector(moveDown)];
+    
+    // 長押しが認識される時間を設定
+    longpress.minimumPressDuration = 1.0;
+    
     [self.buttonUp addGestureRecognizer:longpress];
 
 //    // ボタンがタップされたときに呼ばれるメソッドを設定
@@ -691,6 +701,10 @@
     //長押しした時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
                                                                                            action:@selector(moveUp)];
+    
+    // 長押しが認識される時間を設定
+    longpress.minimumPressDuration = 1.0;
+    
     [self.buttonUp addGestureRecognizer:longpress];
 
     
@@ -728,6 +742,10 @@
     //長押しした時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
                                                                                            action:@selector(moveDown)];
+    
+    // 長押しが認識される時間を設定
+    longpress.minimumPressDuration = 1.0;
+    
     [self.buttonUp addGestureRecognizer:longpress];
 
 //    // ボタンがタップされたときに呼ばれるメソッドを設定
