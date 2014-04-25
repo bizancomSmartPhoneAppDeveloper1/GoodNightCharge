@@ -571,7 +571,7 @@
 //上に動かす
 - (void)moveUp{
     [timer invalidate];
-    y -= 3;
+    y -= 10;
     
     zentai.center = CGPointMake(160, y);
     
@@ -596,6 +596,7 @@
     // キャプションに合わせてサイズを設定
     [self.buttonUp sizeToFit];
     
+    // ボタンをビューに追加
     [self.view addSubview:self.buttonUp];
     self.buttonUpTurned.hidden = YES; //f.
     self.buttonUp.hidden = NO;
@@ -607,7 +608,7 @@
  
     
     // 長押しが認識される時間を設定
-    longpress.minimumPressDuration = 1.0;
+    longpress.minimumPressDuration = 0.5;
     
     // 長押し中に動いても許容されるピクセル数を設定
     longpress.allowableMovement = 10.0;
@@ -629,7 +630,7 @@
 //下に動かす
 - (void)moveDown{
     [timer invalidate];
-    y += 3;
+    y += 10;
     
     zentai.center = CGPointMake(160, y);
     
@@ -658,8 +659,13 @@
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
                                                                                            action:@selector(moveDown)];
     
+    // ボタンをビューに追加
+    [self.view addSubview:self.buttonDown];
+    self.buttonDownTurned.hidden = YES; //f.
+    self.buttonDown.hidden = NO;
+    
     // 長押しが認識される時間を設定
-    longpress.minimumPressDuration = 1.0;
+    longpress.minimumPressDuration = 0.5;
     
     // 長押し中に動いても許容されるピクセル数を設定
     longpress.allowableMovement = 10.0;
@@ -671,10 +677,10 @@
 //               action:@selector(moveDown)
 //     forControlEvents:UIControlEventTouchUpInside];
     
-    // ボタンをビューに追加
-    [self.view addSubview:self.buttonDown];
-    self.buttonDownTurned.hidden = YES; //f.
-    self.buttonDown.hidden = NO;
+//    // ボタンをビューに追加
+//    [self.view addSubview:self.buttonDown];
+//    self.buttonDownTurned.hidden = YES; //f.
+//    self.buttonDown.hidden = NO;
     
 }
 
@@ -718,12 +724,17 @@
     // キャプションに合わせてサイズを設定
     [self.buttonUpTurned sizeToFit];
     
+    // ボタンをビューに追加
+    [self.view addSubview:self.buttonUpTurned];
+    self.buttonUp.hidden = YES;
+    self.buttonUpTurned.hidden = NO;
+    
     //長押しした時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
                                                                                            action:@selector(moveUp)];
     
     // 長押しが認識される時間を設定
-    longpress.minimumPressDuration = 1.0;
+    longpress.minimumPressDuration = 0.5;
     
     // 長押し中に動いても許容されるピクセル数を設定
     longpress.allowableMovement = 10.0;
@@ -736,10 +747,10 @@
 //                      action:@selector(moveUp)
 //            forControlEvents:UIControlEventTouchUpInside];
 //    
-    // ボタンをビューに追加
-    [self.view addSubview:self.buttonUpTurned];
-    self.buttonUp.hidden = YES;
-    self.buttonUpTurned.hidden = NO;
+//    // ボタンをビューに追加
+//    [self.view addSubview:self.buttonUpTurned];
+//    self.buttonUp.hidden = YES;
+//    self.buttonUpTurned.hidden = NO;
     
 }
 //下に動かすボタン 横向き用
@@ -758,6 +769,11 @@
     
     [self.buttonDownTurned setAlpha:0.3];
     
+    // ボタンをビューに追加
+    [self.view addSubview:self.buttonDownTurned];
+    self.buttonDown.hidden = YES;
+    self.buttonDownTurned.hidden = NO;
+    
     //長押しした時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
                                                                                            action:@selector(moveDown)];
@@ -775,10 +791,10 @@
 //                        action:@selector(moveDown)
 //              forControlEvents:UIControlEventTouchUpInside];
     
-    // ボタンをビューに追加
-    [self.view addSubview:self.buttonDownTurned];
-    self.buttonDown.hidden = YES;
-    self.buttonDownTurned.hidden = NO;
+//    // ボタンをビューに追加
+//    [self.view addSubview:self.buttonDownTurned];
+//    self.buttonDown.hidden = YES;
+//    self.buttonDownTurned.hidden = NO;
     
 }
 
