@@ -505,7 +505,7 @@
     
     if (y < scrolllimit)
     {
-        [timer invalidate];
+        scrollspeed = 0;
     }
 }
 
