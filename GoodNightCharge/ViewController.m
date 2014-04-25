@@ -10,7 +10,7 @@
 
 @interface ViewController ()
 {
-    int count,r,y;
+    int count,scrollspeed,scrolllimit,r,y;
     NSTimer* timer;
     UILabel *myLabel;
     EKEventStore *store;
@@ -35,6 +35,10 @@
     CGRect rect = CGRectMake(0, 0, width, height);
     
     y = 600;
+    scrollspeed = -1;
+    scrolllimit = -17;
+    
+
     
     zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 269, 1000)];
     
@@ -495,11 +499,11 @@
 - (void)timerDidFire
 {
     
-    y -= 1;
+    y += scrollspeed;
     
     zentai.center = CGPointMake(160, y);
     
-    if (y < -17)
+    if (y < scrolllimit)
     {
         [timer invalidate];
     }
@@ -573,19 +577,20 @@
 {
     if (sender.state == UIGestureRecognizerStateBegan)
     {
-        [timer invalidate];
         
-        y -= 10;
-        
-        zentai.center = CGPointMake(160, y);
+        scrollspeed = -10;
+        scrollspeed = -600;
+//        [timer invalidate];
+//        
+//        y -= 10;
+//        
+//        zentai.center = CGPointMake(160, y);
     }
     else if (sender.state == UIGestureRecognizerStateEnded)
     {
-        timer = [NSTimer scheduledTimerWithTimeInterval:0.03
-                                                 target:self
-                                               selector:@selector(timerDidFire)
-                                               userInfo:nil
-                                                repeats:YES];
+        scrollspeed = -1;
+        scrolllimit = -17;
+  
     }
     
 }
@@ -624,7 +629,7 @@
     longpress.minimumPressDuration = 0.5;
     
     // 長押し中に動いても許容されるピクセル数を設定
-    longpress.allowableMovement = 40.0;
+    longpress.allowableMovement = 100;
     
     [self.buttonUp addGestureRecognizer:longpress];
     
@@ -645,19 +650,19 @@
 {
     if (sender.state == UIGestureRecognizerStateBegan)
         {
-            [timer invalidate];
-    
-            y += 10;
-    
-            zentai.center = CGPointMake(160, y);
+            
+            scrollspeed = 10;
+            scrolllimit = 300;
+//            [timer invalidate];
+//    
+//            y += 10;
+//    
+//            zentai.center = CGPointMake(160, y);
         }
     else if (sender.state == UIGestureRecognizerStateEnded)
     {
-        timer = [NSTimer scheduledTimerWithTimeInterval:0.03
-                                             target:self
-                                           selector:@selector(timerDidFire)
-                                           userInfo:nil
-                                            repeats:YES];
+        scrollspeed = -1;
+        scrolllimit = -17;
     }
 }
 
@@ -693,7 +698,7 @@
     longpress.minimumPressDuration = 0.5;
     
     // 長押し中に動いても許容されるピクセル数を設定
-    longpress.allowableMovement = 40.0;
+    longpress.allowableMovement = 100;
 
     [self.buttonDown addGestureRecognizer:longpress];
 
@@ -762,7 +767,7 @@
     longpress.minimumPressDuration = 0.5;
     
     // 長押し中に動いても許容されるピクセル数を設定
-    longpress.allowableMovement = 40.0;
+    longpress.allowableMovement = 100;
 
     [self.buttonUpTurned addGestureRecognizer:longpress];
 
@@ -807,7 +812,7 @@
     longpress.minimumPressDuration = 1.0;
     
     // 長押し中に動いても許容されるピクセル数を設定
-    longpress.allowableMovement = 40.0;
+    longpress.allowableMovement = 100;
 
     [self.buttonDownTurned addGestureRecognizer:longpress];
 
