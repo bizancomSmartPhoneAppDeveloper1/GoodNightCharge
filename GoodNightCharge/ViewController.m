@@ -652,7 +652,7 @@
         {
             
             scrollspeed = 10;
-            scrolllimit = 300;
+        
 //            [timer invalidate];
 //    
 //            y += 10;
