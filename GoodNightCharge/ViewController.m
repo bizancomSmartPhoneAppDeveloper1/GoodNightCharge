@@ -557,7 +557,7 @@
 //上に動かす
 - (void)moveUp{
     [timer invalidate];
-    y -= 3;
+    y -= 10;
     
     zentai.center = CGPointMake(160, y);
     
@@ -593,10 +593,10 @@
  
     
     // 長押しが認識される時間を設定
-    longpress.minimumPressDuration = 1.0;
+    longpress.minimumPressDuration = 0.5;
     
     // 長押し中に動いても許容されるピクセル数を設定
-    longpress.allowableMovement = 10.0;
+    longpress.allowableMovement = 40.0;
     
     [self.buttonUp addGestureRecognizer:longpress];
     
@@ -615,7 +615,7 @@
 //下に動かす
 - (void)moveDown{
     [timer invalidate];
-    y += 3;
+    y += 10;
     
     zentai.center = CGPointMake(160, y);
     
