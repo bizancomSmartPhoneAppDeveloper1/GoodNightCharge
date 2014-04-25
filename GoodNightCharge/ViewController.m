@@ -668,7 +668,7 @@
     longpress.minimumPressDuration = 0.5;
     
     // 長押し中に動いても許容されるピクセル数を設定
-    longpress.allowableMovement = 10.0;
+    longpress.allowableMovement = 40.0;
 
     [self.buttonDown addGestureRecognizer:longpress];
 
@@ -737,7 +737,7 @@
     longpress.minimumPressDuration = 0.5;
     
     // 長押し中に動いても許容されるピクセル数を設定
-    longpress.allowableMovement = 10.0;
+    longpress.allowableMovement = 40.0;
 
     [self.buttonUpTurned addGestureRecognizer:longpress];
 
@@ -782,7 +782,7 @@
     longpress.minimumPressDuration = 1.0;
     
     // 長押し中に動いても許容されるピクセル数を設定
-    longpress.allowableMovement = 10.0;
+    longpress.allowableMovement = 40.0;
 
     [self.buttonDownTurned addGestureRecognizer:longpress];
 
