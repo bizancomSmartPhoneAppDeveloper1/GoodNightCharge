@@ -591,6 +591,9 @@
     // 長押しが認識される時間を設定
     longpress.minimumPressDuration = 1.0;
     
+    // 長押し中に動いても許容されるピクセル数を設定
+    longpress.allowableMovement = 10.0;
+    
     [self.buttonUp addGestureRecognizer:longpress];
     
     // ボタンがタップされたときに呼ばれるメソッドを設定
@@ -640,7 +643,10 @@
     // 長押しが認識される時間を設定
     longpress.minimumPressDuration = 1.0;
     
-    [self.buttonUp addGestureRecognizer:longpress];
+    // 長押し中に動いても許容されるピクセル数を設定
+    longpress.allowableMovement = 10.0;
+
+    [self.buttonDown addGestureRecognizer:longpress];
 
 //    // ボタンがタップされたときに呼ばれるメソッドを設定
 //    [self.buttonDown addTarget:self
@@ -705,7 +711,10 @@
     // 長押しが認識される時間を設定
     longpress.minimumPressDuration = 1.0;
     
-    [self.buttonUp addGestureRecognizer:longpress];
+    // 長押し中に動いても許容されるピクセル数を設定
+    longpress.allowableMovement = 10.0;
+
+    [self.buttonUpTurned addGestureRecognizer:longpress];
 
     
 //    // ボタンがタップされたときに呼ばれるメソッドを設定
@@ -746,7 +755,10 @@
     // 長押しが認識される時間を設定
     longpress.minimumPressDuration = 1.0;
     
-    [self.buttonUp addGestureRecognizer:longpress];
+    // 長押し中に動いても許容されるピクセル数を設定
+    longpress.allowableMovement = 10.0;
+
+    [self.buttonDownTurned addGestureRecognizer:longpress];
 
 //    // ボタンがタップされたときに呼ばれるメソッドを設定
 //    [self.buttonDownTurned addTarget:self
