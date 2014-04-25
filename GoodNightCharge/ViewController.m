@@ -569,11 +569,24 @@
 }
 
 //上に動かす
-- (void)moveUp{
-    [timer invalidate];
-    y -= 10;
-    
-    zentai.center = CGPointMake(160, y);
+- (void)moveUp:(UILongPressGestureRecognizer *)sender
+{
+    if (sender.state == UIGestureRecognizerStateBegan)
+    {
+        [timer invalidate];
+        
+        y -= 10;
+        
+        zentai.center = CGPointMake(160, y);
+    }
+    else if (sender.state == UIGestureRecognizerStateEnded)
+    {
+        timer = [NSTimer scheduledTimerWithTimeInterval:0.03
+                                                 target:self
+                                               selector:@selector(timerDidFire)
+                                               userInfo:nil
+                                                repeats:YES];
+    }
     
 }
 
@@ -603,7 +616,7 @@
     
     //長押しされた時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
-                                                                                           action:@selector(moveUp)];
+                                                                                           action:@selector(moveUp:)];
     
  
     
@@ -628,12 +641,24 @@
 }
 
 //下に動かす
-- (void)moveDown{
-    [timer invalidate];
-    y += 10;
+- (void)moveDown:(UIGestureRecognizer *)sender
+{
+    if (sender.state == UIGestureRecognizerStateBegan)
+        {
+            [timer invalidate];
     
-    zentai.center = CGPointMake(160, y);
+            y += 10;
     
+            zentai.center = CGPointMake(160, y);
+        }
+    else if (sender.state == UIGestureRecognizerStateEnded)
+    {
+        timer = [NSTimer scheduledTimerWithTimeInterval:0.03
+                                             target:self
+                                           selector:@selector(timerDidFire)
+                                           userInfo:nil
+                                            repeats:YES];
+    }
 }
 
 //下に動かすボタン
@@ -657,7 +682,7 @@
     
     //長押しした時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
-                                                                                           action:@selector(moveDown)];
+                                                                                           action:@selector(moveDown:)];
     
     // ボタンをビューに追加
     [self.view addSubview:self.buttonDown];
@@ -731,7 +756,7 @@
     
     //長押しした時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
-                                                                                           action:@selector(moveUp)];
+                                                                                           action:@selector(moveUp:)];
     
     // 長押しが認識される時間を設定
     longpress.minimumPressDuration = 0.5;
@@ -776,7 +801,7 @@
     
     //長押しした時に呼ばれるメソッド設定
     UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc]initWithTarget:self
-                                                                                           action:@selector(moveDown)];
+                                                                                           action:@selector(moveDown:)];
     
     // 長押しが認識される時間を設定
     longpress.minimumPressDuration = 1.0;
