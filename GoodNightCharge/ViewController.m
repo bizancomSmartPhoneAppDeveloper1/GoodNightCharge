@@ -30,11 +30,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 
-    /*
-    y = 600;
-    scrollspeed = -5;
-    scrolllimit = -17;
-    */
     
     
 //    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
@@ -521,7 +516,7 @@
     zentai.hidden = NO;
     
     y = 600;
-    scrollspeed = -5;
+    scrollspeed = -1;
     scrolllimit = -17;
     [self mainloop];
     
@@ -658,7 +653,7 @@
     }
     else if (sender.state == UIGestureRecognizerStateEnded)
     {
-        scrollspeed = -5;
+        scrollspeed = -1;
         scrolllimit = -17;
   
     }
@@ -731,7 +726,7 @@
         }
     else if (sender.state == UIGestureRecognizerStateEnded)
     {
-        scrollspeed = -5;
+        scrollspeed = -1;
         scrolllimit = -17;
     }
 }
