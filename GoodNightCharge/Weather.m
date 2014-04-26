@@ -57,7 +57,7 @@
             //華氏を摂氏に変換
             double tempInt = self.temp.doubleValue;
             double sesshi =  tempInt - 273.15;
-            self.temp = [NSString stringWithFormat:@"%.2f",sesshi];
+            self.temp = [NSString stringWithFormat:@"%.1f",sesshi];
             NSLog(@"sesshi=%@",self.temp);
             
             //アイコン情報取得

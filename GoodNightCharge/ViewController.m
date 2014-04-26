@@ -20,6 +20,7 @@
     UILabel *degree;
     UIImageView *weatherIconView;
     UIImageView *weatherCIconView;
+    UIAlertView *alert;
 }
 
 @end
@@ -29,10 +30,11 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 
+    /*
     y = 600;
     scrollspeed = -5;
     scrolllimit = -17;
-    
+    */
     
     
 //    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
@@ -45,7 +47,7 @@
     
     
     
-    [self calenderAuth];
+    //[self calenderAuth];
     
     self.weather = [[Weather alloc]init];
     
@@ -78,18 +80,23 @@
     rayer.backgroundColor = [UIColor blackColor];
     [self.view addSubview:rayer];
     
+    //EKEventStore初期化
+    store = [[EKEventStore alloc] init];
+    
+
 }
 
 - (void)calenderAuth
 {
     
-    store = [[EKEventStore alloc] init];
+    /*
     if ([store respondsToSelector:@selector(requestAccessToEntityType:completion:)]) {
         // iOS 6 and later
         [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
             if (granted) {
                 // code here for when the user allows your app to access the calendar
                 [self calenderPicker];
+
             } else {
                 // code here for when the user does NOT allow your app to access the calendar
             }
@@ -97,13 +104,78 @@
     } else {
         // code here for iOS < 6.0
         [self calenderPicker];
+    }*/
+    
+    
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    // iOS5: ユーザーに許可を求める必要がない
+    if (version < 6.0) {
+        [self calenderPicker];
     }
+    
+    // iOS6: ユーザーに許可を求める必要がある
+    EKAuthorizationStatus status = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
+    switch (status) {
+        case EKAuthorizationStatusNotDetermined: {
+            // ユーザーにまだアクセスの許可を求めていない場合
+            // 「このアプリがカレンダーへのアクセスを求めています」というアラートが表示される
+            [store requestAccessToEntityType:EKEntityTypeEvent
+                                       completion:^(BOOL granted, NSError *error)
+             {
+                 if (granted) {
+                     // 「OK」をタップ
+                     [self calenderPicker];
+                 } else {
+                     // 「許可しない」をタップ
+                     // UIAlertView の表示を main thread で行う
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         [[[UIAlertView alloc] initWithTitle:@"確認"
+                                                     message:@"このアプリのカレンダーへのアクセスを許可するには、プライバシーから設定する必要があります。"
+                                                    delegate:nil
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil]
+                          show];
+                     });
+                 }
+             }];
+        }
+            break;
+        case EKAuthorizationStatusAuthorized:
+            // ユーザーから許可されている
+            [self calenderPicker];
+            break;
+        case EKAuthorizationStatusRestricted:
+            // 「設定」→「一般」→「機能制限」→「カレンダー」→
+            // 「変更を許可しない」が選択されている
+        case EKAuthorizationStatusDenied:
+            // ユーザーから拒否されている
+            // ユーザーにアクセスの許可を求めた後、「許可しない」をタップするとこれが呼ばれる
+            // 「設定」→「プライバシー」→「カレンダー」からアプリを許可してもらう必要がある
+            [[[UIAlertView alloc] initWithTitle:@"確認"
+                                        message:@"カレンダーに対する変更を機能制限されているか、プライバシーから許可されていません。"
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil]
+             show];
+            
+            break;
+        default:
+            break;
+    }
+
+    
+    
+    
+    
+    
+    
+    
     
 }
 
 - (void)calenderPicker
 {
-    
+
     int i = 0;
     
     NSDate *start = [NSDate date];
@@ -140,7 +212,7 @@
         
         
         NSAttributedString *scheduletime = [[NSAttributedString alloc]initWithString:
-                                    [NSString stringWithFormat:@"%d:%@\n",thisHour,thisMinuteString]
+                                    [NSString stringWithFormat:@" %d:%@\n",thisHour,thisMinuteString]
                                                                   attributes:@{ NSFontAttributeName:[UIFont boldSystemFontOfSize:13]}];
         
         NSAttributedString *scheduletitle = [[NSAttributedString alloc]initWithString:
@@ -150,7 +222,7 @@
         NSAttributedString *schedulelocation;
         if (!(e.location == NULL)) {
         schedulelocation = [[NSAttributedString alloc]initWithString:
-                                             [NSString stringWithFormat:@"　　%@",e.location]
+                                             [NSString stringWithFormat:@"     location at %@",e.location]
                                                                            attributes:@{ NSFontAttributeName:[UIFont systemFontOfSize:15]}];
         }else{
             schedulelocation = [[NSAttributedString alloc]initWithString:
@@ -164,7 +236,9 @@
         
     
         // ラベルを配置していく
-            myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 600+(i*90), 230, 80)];
+        myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 600+(i*90), 230, 80)];
+        
+
         
         //ラベルの四隅を丸くする
         [[myLabel layer] setCornerRadius:3.0];
@@ -186,6 +260,7 @@
         
         i++;
         
+        
     }
     zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 269, 1000)];
     // ラベルをビューに設定する
@@ -195,6 +270,7 @@
     
     //ビューをUIviewへ設定する
     [self.view addSubview:zentai];
+   
     
 }
 
@@ -244,13 +320,6 @@
     //本日の天気情報を取得
     [self urlWithAddress];
     [self iconAndTempViewMethod];
-    
-    
-    if (self.device.batteryState == (long)UIDeviceBatteryStateCharging) {
-        [self iconAndTempShowMethod];
-    }else{
-        [self iconAndTempHiddenMethod];
-    }
     
     
 
@@ -348,27 +417,8 @@
     barView.alpha = 0.3;
     [self.view addSubview:barView];
     
-    //アイコンを隠す
-    [self iconAndTempHiddenMethod];
     
     /* ここまで */
-    
-}
-
-- (void)iconAndTempShowMethod{
-
-    tomorrow.hidden = NO;
-    degree.hidden = NO;
-    weatherIconView.hidden = NO;
-    weatherCIconView.hidden = NO;
-}
-
-- (void)iconAndTempHiddenMethod{
-    
-    tomorrow.hidden = YES;
-    degree.hidden = YES;
-    weatherIconView.hidden = YES;
-    weatherCIconView.hidden = YES;
     
 }
 
@@ -423,6 +473,9 @@
     {
         //UIDeviceBatteryStateFull:バッテリーフル充電状態
         NSLog(@"バッテリーフル充電状態");
+        
+        //フル充電になってもエンディングロールを流す
+        [self pluged];
     }
     
     
@@ -440,25 +493,11 @@
     //先にアプリを起動して、電源を指した時に呼ばれる
     if (self.device.batteryState == (long)UIDeviceBatteryStateCharging) {
         
-        //BGMスタート
-         [self bgmstart];
-        //エンディングロールスタート
-         [self mainloop];
+        //アラートを自動的に閉じる
+        [alert dismissWithClickedButtonIndex:0 animated:NO];
         
-        //ボタンを作成
-        UIDeviceOrientation orientation = [[UIDevice currentDevice]orientation];
-        if (orientation == UIInterfaceOrientationLandscapeLeft ||
-            orientation == UIInterfaceOrientationLandscapeRight){//横向きの時
-            [self buttonUpMethodTurned];
-            [self buttonDownNethodTurned];
-        }else{//縦向きのとき
-            [self buttonUpMethod];
-            [self buttonDownNethod];
-        }
+        [self pluged];
         
-        //アイコン表示
-        [self iconAndTempShowMethod];
-
     }else if(self.device.batteryState == (long)UIDeviceBatteryStateUnplugged){
 
         [self unplugMethod];
@@ -468,10 +507,42 @@
     
 }
 
+//電源がさされた時に呼ばれる関数
+- (void)pluged{
+    
+    //カレンダー情報取得
+    [self calenderAuth];
+    
+    //BGMスタート
+    [self bgmstart];
+    //エンディングロールスタート
+    zentai.hidden = NO;
+    
+    y = 600;
+    scrollspeed = -5;
+    scrolllimit = -17;
+    [self mainloop];
+    
+    //ボタンを作成
+    UIDeviceOrientation orientation = [[UIDevice currentDevice]orientation];
+    if (orientation == UIInterfaceOrientationLandscapeLeft ||
+        orientation == UIInterfaceOrientationLandscapeRight){//横向きの時
+        [self buttonUpMethodTurned];
+        [self buttonDownNethodTurned];
+    }else{//縦向きのとき
+        [self buttonUpMethod];
+        [self buttonDownNethod];
+    }
+    
+
+}
+
+
+
 -(void)mainloop
 {
     
-    //NStimerが有効になっていなければ、timerを止める
+    //NStimerが動いていなければ、動かす
 	if ([timer isValid])
     {
 		[timer invalidate];
@@ -712,14 +783,18 @@
 }
 
 
+//電源が抜かれた時に呼ばれる関数
 -(void)unplugMethod{
+    //スクロールスピードをリセット
+    scrollspeed = 0;
+    
     [self.bgm stop];
     zentai.hidden = YES;
     y = 600;
     self.buttonUp.hidden = YES;
     self.buttonDown.hidden =  YES;
-    //アイコン非表示
-    [self iconAndTempHiddenMethod];
+    
+
 }
 
 
@@ -728,7 +803,7 @@
     
     NSString *localize = NSLocalizedString(@"key", nil);
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:localize
+    alert = [[UIAlertView alloc] initWithTitle:localize
                                                     message:nil
                                                    delegate:self
                                           cancelButtonTitle:nil
