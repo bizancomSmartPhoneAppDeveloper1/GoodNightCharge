@@ -467,6 +467,8 @@
     {
         //UIDeviceBatteryStateCharging:バッテリー充電中。
         NSLog(@"バッテリー充電中");
+        //最初から充電中でもエンディングロールを流す
+        [self pluged];
         
     }
     if (self.device.batteryState == (long)UIDeviceBatteryStateFull)
