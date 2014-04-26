@@ -28,36 +28,12 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    //スクリーンサイズの取得
-    CGRect screenSize = [[UIScreen mainScreen] bounds];
-    CGFloat width = screenSize.size.width;
-    CGFloat height = screenSize.size.height;
-    CGRect rect = CGRectMake(0, 0, width, height);
-    
+
     y = 600;
-    scrollspeed = -1;
+    scrollspeed = -5;
     scrolllimit = -17;
     
-
     
-    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 269, 1000)];
-    
-    /* 背景画像の準備*/
-    UIImage *imageData = [UIImage imageNamed:@"back1.jpg"];
-    
-    
-    //イメージビューをつくる
-    imageView = [[UIImageView alloc]initWithFrame:rect];
-    imageView.image = imageData;
-    imageView.contentMode = UIViewContentModeScaleToFill;
-    [self.view addSubview:imageView];
-    
-    //背景トーンを落とすためのレイヤーを重ねる
-    UIView *rayer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, height, height)];
-    rayer.alpha = 0.2;
-    rayer.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:rayer];
-
     
 //    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
 //    
@@ -80,7 +56,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //スクリーンサイズの取得
+    CGRect screenSize = [[UIScreen mainScreen] bounds];
+    CGFloat width = screenSize.size.width;
+    CGFloat height = screenSize.size.height;
+    CGRect rect = CGRectMake(0, 0, width, height);
     
+    //イメージビューをつくる
+    
+    /* 背景画像の準備*/
+    UIImage *imageData = [UIImage imageNamed:@"back1.jpg"];
+    
+    imageView = [[UIImageView alloc]initWithFrame:rect];
+    imageView.image = imageData;
+    imageView.contentMode = UIViewContentModeScaleToFill;
+    [self.view addSubview:imageView];
+    
+    //背景トーンを落とすためのレイヤーを重ねる
+    UIView *rayer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, height, height)];
+    rayer.alpha = 0.2;
+    rayer.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:rayer];
     
 }
 
@@ -115,6 +111,7 @@
                                                             endDate:[start dateByAddingTimeInterval:24*3600]
                                                           calendars:nil];
     NSArray *events = [store eventsMatchingPredicate:predicate];
+    NSMutableArray *myLabels = [[NSMutableArray alloc] init];
     for(EKEvent *e in events)
     {
         NSLog(@"title=%@", e.title);
@@ -185,17 +182,19 @@
         
         myLabel.numberOfLines = 3;
         
-        
-        // ラベルをビューに設定する
-        [zentai addSubview:myLabel];
-        [zentai sizeToFit];
-        
-        //ビューをUIviewへ設定する
-        [self.view addSubview:zentai];
+        [myLabels addObject:myLabel];
         
         i++;
         
     }
+    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 269, 1000)];
+    // ラベルをビューに設定する
+    for (UILabel *label in myLabels) {
+        [zentai addSubview:label];
+    }
+    
+    //ビューをUIviewへ設定する
+    [self.view addSubview:zentai];
     
 }
 
@@ -472,8 +471,6 @@
 -(void)mainloop
 {
     
-    zentai.hidden = NO;
-    
     //NStimerが有効になっていなければ、timerを止める
 	if ([timer isValid])
     {
@@ -578,7 +575,7 @@
     if (sender.state == UIGestureRecognizerStateBegan)
     {
         
-        scrollspeed = -10;
+        scrollspeed = -20;
         scrolllimit = -600;
 //        [timer invalidate];
 //        
@@ -588,7 +585,7 @@
     }
     else if (sender.state == UIGestureRecognizerStateEnded)
     {
-        scrollspeed = -1;
+        scrollspeed = -5;
         scrolllimit = -17;
   
     }
@@ -652,7 +649,7 @@
         {
             
             scrollspeed = 10;
-            scrolllimit = 300;
+            scrolllimit = -600;
 //            [timer invalidate];
 //    
 //            y += 10;
@@ -661,7 +658,7 @@
         }
     else if (sender.state == UIGestureRecognizerStateEnded)
     {
-        scrollspeed = -1;
+        scrollspeed = -5;
         scrolllimit = -17;
     }
 }
@@ -809,7 +806,7 @@
                                                                                            action:@selector(moveDown:)];
     
     // 長押しが認識される時間を設定
-    longpress.minimumPressDuration = 1.0;
+    longpress.minimumPressDuration = 0.5;
     
     // 長押し中に動いても許容されるピクセル数を設定
     longpress.allowableMovement = 100;
