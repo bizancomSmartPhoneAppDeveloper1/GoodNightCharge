@@ -14,7 +14,7 @@
 - (void)takeInfo{
     NSMutableArray *block = [[NSMutableArray alloc]init];
     block = [self.jsonObject objectForKey:@"list"];
-    int count = [block count];
+    NSInteger count = [block count];
     int i;
     NSDate *date = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -37,17 +37,23 @@
     NSLog(@"today=%d",today);
     
     NSString *date2;
-    if (thisMonth <10) {
+    if (thisMonth < 10 && today < 10) {
+        date2 = [NSString stringWithFormat:@"%d-0%d-0%d 03:00:00",thisyear,thisMonth,today];
+    }else if(today < 10){
+        date2 = [NSString stringWithFormat:@"%d-%d-0%d 03:00:00",thisyear,thisMonth,today];
+    }else if(thisMonth < 10) {
         date2 = [NSString stringWithFormat:@"%d-0%d-%d 03:00:00",thisyear,thisMonth,today];
     }else{
         date2 = [NSString stringWithFormat:@"%d-%d-%d 03:00:00",thisyear,thisMonth,today];
     }
     
+
+    
     NSDictionary *block2;
     for (i=0; i<count; i++) {
         block2 = [block objectAtIndex:i];
         self.tomorrow = [block2 objectForKey:@"dt_txt"];
-        
+
         //次の日の昼１２時の情報を取得する
         if ([date2 isEqualToString:self.tomorrow]) {
             //気温情報取得

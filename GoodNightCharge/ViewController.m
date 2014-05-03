@@ -373,37 +373,40 @@
     [weatherView addSubview:tomorrow];
     
     
-    //気温ラベル生成
-    degree = [[UILabel alloc]initWithFrame:CGRectMake(5, 43, 65, 20)];
-    NSLog(@"iconView=%@",self.weather.temp);
-    //degree.text = self.weather.temp;
-    degree.text = [NSString stringWithFormat:@"%@",self.weather.temp];
-    degree.font = [UIFont fontWithName:@"AppleGothic" size:18];
-    degree.textColor = [UIColor whiteColor];
-    degree.textAlignment = NSTextAlignmentRight;
-    //degree.backgroundColor = [UIColor blackColor];//範囲確認用着色
-    [weatherView addSubview:degree];
+    //天気情報が取れればラベル表示
+    if (!(self.weather.temp == NULL)) {
+        
+        //気温ラベル生成
+        degree = [[UILabel alloc]initWithFrame:CGRectMake(5, 43, 65, 20)];
+        NSLog(@"iconView=%@",self.weather.temp);
+        //degree.text = self.weather.temp;
+        degree.text = [NSString stringWithFormat:@"%@",self.weather.temp];
+        degree.font = [UIFont fontWithName:@"AppleGothic" size:18];
+        degree.textColor = [UIColor whiteColor];
+        degree.textAlignment = NSTextAlignmentRight;
+        //degree.backgroundColor = [UIColor blackColor];//範囲確認用着色
+        [weatherView addSubview:degree];
     
-    //度数アイコン表示箇所指定
-    CGRect weatherCIcon = CGRectMake(70, 36, 25 , 25);
-    weatherCIconView = [[UIImageView alloc]initWithFrame:weatherCIcon];
-    NSLog(@"iconView=%@",self.weather.icon);
-    //weatherCIconView.backgroundColor = [UIColor blueColor];//範囲確認用着色
-    UIImage *weatherCIconImage = [UIImage imageNamed:@"iconC.png"];
-    weatherCIconView.image = weatherCIconImage;
-    [self.view addSubview:weatherCIconView];
+        //度数アイコン表示箇所指定
+        CGRect weatherCIcon = CGRectMake(70, 36, 25 , 25);
+        weatherCIconView = [[UIImageView alloc]initWithFrame:weatherCIcon];
+        NSLog(@"iconView=%@",self.weather.icon);
+        //weatherCIconView.backgroundColor = [UIColor blueColor];//範囲確認用着色
+        UIImage *weatherCIconImage = [UIImage imageNamed:@"iconC.png"];
+        weatherCIconView.image = weatherCIconImage;
+        [self.view addSubview:weatherCIconView];
 
     
     
-    //天気アイコン表示箇所指定
-    CGRect weatherIcon = CGRectMake(90, 22, 40 , 40);
-    weatherIconView = [[UIImageView alloc]initWithFrame:weatherIcon];
-    NSLog(@"iconView=%@",self.weather.icon);
-    //weatherIconView.backgroundColor = [UIColor blueColor];//範囲確認用着色
-    UIImage *weatherIconImage = [UIImage imageNamed:self.weather.icon];
-    weatherIconView.image = weatherIconImage;
-    [self.view addSubview:weatherIconView];
-    
+        //天気アイコン表示箇所指定
+        CGRect weatherIcon = CGRectMake(90, 22, 40 , 40);
+        weatherIconView = [[UIImageView alloc]initWithFrame:weatherIcon];
+        NSLog(@"iconView=%@",self.weather.icon);
+        //weatherIconView.backgroundColor = [UIColor blueColor];//範囲確認用着色
+        UIImage *weatherIconImage = [UIImage imageNamed:self.weather.icon];
+        weatherIconView.image = weatherIconImage;
+        [self.view addSubview:weatherIconView];
+    }
     
     //ステータスバー部分
     CGRect barRect = CGRectMake(0, 0, height, 20);
