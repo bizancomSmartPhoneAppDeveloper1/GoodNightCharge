@@ -797,12 +797,6 @@
     
     self.connectLabel.hidden = NO;
     
-//    alert = [[UIAlertView alloc] initWithTitle:localize
-//                                                    message:nil
-//                                                   delegate:self
-//                                          cancelButtonTitle:nil
-//                                          otherButtonTitles:@"OK",nil];
-//    [alert show];
 }
 //上に動かすボタン 横向き用
 - (void)buttonUpMethodTurned{
