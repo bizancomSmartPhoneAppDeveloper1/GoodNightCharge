@@ -30,6 +30,7 @@
 @property UIButton *buttonDown;
 @property UIButton *buttonUpTurned;
 @property UIButton *buttonDownTurned;
+@property UILabel *connectLabel;
 
 -(void)firstLoadMethod;
 

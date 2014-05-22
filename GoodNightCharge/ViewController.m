@@ -268,7 +268,7 @@
         [self.locationManager startUpdatingLocation];
     } else {
         NSLog(@"Location services not available.");
-        [self.weather alertViewMethod];
+       // [self.weather alertViewMethod];
         
     }
     
@@ -304,7 +304,7 @@
        didFailWithError:(NSError *)error
 {
     NSLog(@"didFailWithError");
-    [self.weather alertViewMethod];
+    //[self.weather alertViewMethod];
 }
 
 
@@ -431,10 +431,10 @@
     
     
     if (self.device.batteryState == (long)UIDeviceBatteryStateUnknown) {
-        [self alertViewMethod];
+        [self labelViewMethod];
     }
     if (self.device.batteryState == (long)UIDeviceBatteryStateUnplugged) {
-        [self alertViewMethod];
+        [self labelViewMethod];
     }
     
     if (self.device.batteryState == (long)UIDeviceBatteryStateCharging)
@@ -470,7 +470,9 @@
     if (self.device.batteryState == (long)UIDeviceBatteryStateCharging) {
         
         //アラートを自動的に閉じる
-        [alert dismissWithClickedButtonIndex:0 animated:NO];
+       // [alert dismissWithClickedButtonIndex:0 animated:NO];
+        
+        self.connectLabel.hidden = YES;
         
         [self pluged];
         
@@ -512,8 +514,6 @@
     
 
 }
-
-
 
 -(void)mainloop
 {
@@ -569,6 +569,7 @@
         imageView.contentMode = UIViewContentModeScaleToFill;
         imageView.center = CGPointMake(width/2, height/2);
         imageView.bounds = CGRectMake(0, 0, width, height);
+        self.connectLabel.center = CGPointMake(width/2, height/2);
         
         if(!self.buttonUp){
             //たて向き用に作成
@@ -591,7 +592,8 @@
         imageView.center = CGPointMake(height/2, width/2);
         imageView.bounds = CGRectMake(0, 0, height, width);
         imageView.contentMode = UIViewContentModeScaleAspectFill;
-        
+        self.connectLabel.center = CGPointMake(height/2, width/2);
+
         if(!self.buttonUpTurned){
         //ボタンを横向き用に作成
         [self buttonUpMethodTurned];
@@ -761,23 +763,46 @@
     y = 600;
     self.buttonUp.hidden = YES;
     self.buttonDown.hidden =  YES;
+    self.connectLabel.hidden = YES;
     
 
 }
 
 
-//読み込み失敗時に呼ばれる関数
-- (void)alertViewMethod{
+//プラグが刺さってない時等に呼ばれる関数
+- (void)labelViewMethod
+{
+    self.connectLabel = [[UILabel alloc]init];
     
     NSString *localize = NSLocalizedString(@"key", nil);
     NSLog(@"Check1----------");
     
-    alert = [[UIAlertView alloc] initWithTitle:localize
-                                                    message:nil
-                                                   delegate:self
-                                          cancelButtonTitle:nil
-                                          otherButtonTitles:@"OK",nil];
-    [alert show];
+    self.connectLabel.frame = CGRectMake(0, 0, 300, 100);
+    
+    self.connectLabel.backgroundColor = [UIColor colorWithRed:0.961 green:0.961 blue:0.961 alpha:0.3];
+    
+    self.connectLabel.text = [NSString stringWithFormat:@"%@",localize];
+    
+    self.connectLabel.font =[UIFont systemFontOfSize:25];
+
+    self.connectLabel.textColor = [UIColor whiteColor];
+    
+    self.connectLabel.textAlignment = NSTextAlignmentCenter;
+    
+    self.connectLabel.numberOfLines = 2;
+    
+    self.connectLabel.center = self.view.center;
+    
+    [self.view addSubview:self.connectLabel];
+    
+    self.connectLabel.hidden = NO;
+    
+//    alert = [[UIAlertView alloc] initWithTitle:localize
+//                                                    message:nil
+//                                                   delegate:self
+//                                          cancelButtonTitle:nil
+//                                          otherButtonTitles:@"OK",nil];
+//    [alert show];
 }
 //上に動かすボタン 横向き用
 - (void)buttonUpMethodTurned{

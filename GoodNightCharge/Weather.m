@@ -94,8 +94,9 @@
         NSDictionary *error = [[NSDictionary alloc]init];
         error = @{@"error":@"error"};
         self.jsonObject = error;
-        [self alertViewMethod];
+//        [self alertViewMethod];
         return self.jsonObject;
+        NSLog(@"通信不能");
     }
     
     //返ってきたデータをJSONObjectWithDataメソッドで解析
@@ -108,14 +109,14 @@
 
 
 //読み込み失敗時に呼ばれる関数
-- (void)alertViewMethod{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"connection failed"
-                                                    message:nil
-                                                   delegate:self
-                                          cancelButtonTitle:nil
-                                          otherButtonTitles:@"OK",nil];
-    [alert show];
-}
+//- (void)alertViewMethod{
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"connection failed"
+//                                                    message:nil
+//                                                   delegate:self
+//                                          cancelButtonTitle:nil
+//                                          otherButtonTitles:@"OK",nil];
+//    [alert show];
+//}
 
 
 @end

@@ -18,7 +18,7 @@
 @property NSString* tomorrow;
 
 - (void)takeInfo;
-- (void)alertViewMethod;
+//- (void)alertViewMethod;
 - (NSDictionary*)webAPIMethod:(NSString*)urlApi;
 
 
