@@ -31,7 +31,7 @@
 @property UIButton *buttonUpTurned;
 @property UIButton *buttonDownTurned;
 
-
+-(void)firstLoadMethod;
 
 
 @end

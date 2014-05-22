@@ -15,7 +15,7 @@
     UILabel *myLabel;
     EKEventStore *store;
     UIView *zentai;
-    UIImageView *imageView; //f.
+    UIImageView *imageView;
     UILabel *tomorrow;
     UILabel *degree;
     UIImageView *weatherIconView;
@@ -29,21 +29,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-
-    
-    
-//    zentai = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
-//    
-//    CGRect zentaiFrame = zentai.frame;
-//    
-//    zentaiFrame.origin = CGPointMake(0, self.view.frame.size.height + 100);
-//    
-//    zentai.frame = zentaiFrame;
-    
-    
-    
-    //[self calenderAuth];
-    
     self.weather = [[Weather alloc]init];
     
     [self firstLoadMethod];
@@ -157,15 +142,6 @@
         default:
             break;
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 - (void)calenderPicker
@@ -648,11 +624,7 @@
         
         scrollspeed = -20;
         scrolllimit = -600;
-//        [timer invalidate];
-//        
-//        y -= 10;
-//        
-//        zentai.center = CGPointMake(160, y);
+
     }
     else if (sender.state == UIGestureRecognizerStateEnded)
     {
@@ -721,11 +693,7 @@
             
             scrollspeed = 10;
             scrolllimit = -600;
-//            [timer invalidate];
-//    
-//            y += 10;
-//    
-//            zentai.center = CGPointMake(160, y);
+
         }
     else if (sender.state == UIGestureRecognizerStateEnded)
     {
@@ -802,6 +770,7 @@
 - (void)alertViewMethod{
     
     NSString *localize = NSLocalizedString(@"key", nil);
+    NSLog(@"Check1----------");
     
     alert = [[UIAlertView alloc] initWithTitle:localize
                                                     message:nil
